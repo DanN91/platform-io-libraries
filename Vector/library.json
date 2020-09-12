@@ -1,0 +1,24 @@
+{
+    "name": "Vector",
+    "version": "1.0.0",
+    "description": "Dynamic array container with minimal interface",
+    "keywords": "vector, dynamic, container",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/DanN91/platform-io-libraries.git#Vector"
+    },
+    "authors":
+    [
+      {
+        "name": "Daniel Nistor",
+        "email": "nisdan91@gmail.com",
+        "maintainer": true
+      }
+    ],
+    "license": "MIT",
+    "frameworks": "Arduino",
+    "platforms": "*",
+    "build_unflags": "-std=c++99",
+    "build_flags": "-std=c++17"
+  }
