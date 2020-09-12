@@ -18,13 +18,13 @@ namespace Buzzer
     class BuzzerPlayer final
     {
     public:
-        explicit BuzzerPlayer(byte pwmPin);
+        explicit BuzzerPlayer(uint8_t pwmPin);
         void Initialize() const;
 
         void Play(Song song) const;
         void Play(Note note) const;
 
     private:
-        byte m_buzzerPin;
+        uint8_t m_buzzerPin;
     };
 } // namespace Buzzer

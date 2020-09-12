@@ -10,7 +10,7 @@
 
 namespace Buzzer
 {
-    BuzzerPlayer::BuzzerPlayer(byte pwmPin)
+    BuzzerPlayer::BuzzerPlayer(uint8_t pwmPin)
         : m_buzzerPin(pwmPin)
     {
         // nothing more
@@ -29,16 +29,14 @@ namespace Buzzer
             // play note
             Play(song.notes[i]);
             // and pause between each note? value is % percent of the note's duration
-            delay(((1000 / static_cast<byte>(song.notes[i].beats)) * song.pause) / 100);
+            delay(((1000 / static_cast<uint8_t>(song.notes[i].beats)) * song.pause) / 100);
         }
     }
 
     void BuzzerPlayer::Play(Note note) const
     {
-        tone(m_buzzerPin, note.frequency);
-
-        // hold the tone according to its value
-        delay(1000 / static_cast<byte>(note.beats));
+        tone(m_buzzerPin, static_cast<uint32_t>(note.frequency));
+        delay(1000 / static_cast<uint16_t>(note.beats));
 
         noTone(m_buzzerPin);
     }

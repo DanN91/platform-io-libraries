@@ -138,8 +138,8 @@ namespace Buzzer
   struct Song
   {
       const Note* notes;
-      byte notesCount;
-      byte tempo;
-      byte pause;
+      uint8_t notesCount;
+      uint8_t tempo;
+      const uint8_t pause; // percent, 0 legato
   };
 } // Buzzer
