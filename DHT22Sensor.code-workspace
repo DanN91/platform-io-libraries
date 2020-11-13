@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "DHT22Sensor_TEST",
+			"path": "DHT22Sensor_TEST"
+		},
+		{
+			"path": "DHT22Sensor"
+		}
+	]
+}
