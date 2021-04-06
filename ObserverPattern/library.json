@@ -1,0 +1,24 @@
+{
+    "name": "ObserverPattern",
+    "version": "1.0.0",
+    "description": "Base classes to be used for implementing Observer pattern which notifies an event has happened.",
+    "keywords": "Observer, pattern, event",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/DanN91/platform-io-libraries.git#ObserverPattern"
+    },
+    "authors":
+    [
+      {
+        "name": "Daniel Nistor",
+        "email": "nisdan91@gmail.com",
+        "maintainer": true
+      }
+    ],
+    "license": "MIT",
+    "frameworks": "Arduino",
+    "platforms": "*",
+    "build_unflags": "-std=c++99",
+    "build_flags": "-std=c++17"
+  }
