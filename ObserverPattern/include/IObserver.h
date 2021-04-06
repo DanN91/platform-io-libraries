@@ -19,23 +19,19 @@ public:
     // Handler
     virtual void OnEvent(uint16_t event) = 0;
 
-    void Add(IObservable& subject);
-    void Remove(IObservable& subject);
-
-    void AddEvent(uint16_t event) { m_events |= event; };
-    void RemoveEvent(uint16_t event) { m_events ^= event; };
-
-    bool IsOfInterest(uint16_t event) const { return (m_events & event); };
-
     // non-copyable & non-movable
     IObserver(const IObserver&) = delete;
     IObserver& operator=(const IObserver&) = delete;
     IObserver(IObserver&&) = delete;
     IObserver& operator=(IObserver&&) = delete;
 
+protected:
+    void Add(IObservable& subject);
+    void Remove(IObservable& subject);
+
 private:
     IObservable** m_subjects = nullptr;
     const uint8_t m_subjectsCount = 0;
 
-    uint16_t m_events = 0;
+    const uint16_t m_events = 0;
 };

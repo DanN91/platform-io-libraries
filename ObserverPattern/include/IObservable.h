@@ -28,6 +28,7 @@ public:
 protected:
     void Notify(uint16_t event);
 
+private:
     IObserver** m_observers = nullptr;
     const uint8_t m_observersCount = 0;
 };

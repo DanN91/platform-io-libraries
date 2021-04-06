@@ -21,10 +21,7 @@ IObservable::IObservable(uint8_t MAX_OBSERVERS_COUNT)
 IObservable::~IObservable()
 {
     for (auto i = 0; i < m_observersCount; ++i)
-    {
-        m_observers[i]->Remove(*this);
         m_observers[i] = nullptr;
-    }
 
     if (m_observers != nullptr)
         delete [] m_observers;
@@ -70,7 +67,7 @@ void IObservable::Notify(uint16_t event)
 {
     for (uint8_t i = 0; i < m_observersCount; ++i)
     {
-        if (m_observers[i] && m_observers[i]->IsOfInterest(event))
+        if (m_observers[i])
             m_observers[i]->OnEvent(event);
     }
 }

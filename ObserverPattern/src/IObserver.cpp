@@ -1,5 +1,7 @@
 /*
-    ...
+    Author: Daniel Nistor
+    Purpose: Subject interface for notifying multiple observers when an event happens. (Observer pattern)
+    MIT License, 2021
 */
 
 #include "IObserver.h"
