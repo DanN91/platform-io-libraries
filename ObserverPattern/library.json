@@ -1,7 +1,7 @@
 {
     "name": "ObserverPattern",
     "version": "1.0.0",
-    "description": "Base classes to be used for implementing Observer pattern which notifies an event has happened.",
+    "description": "Base classes to be used for implementing Observer pattern for events.",
     "keywords": "Observer, pattern, event",
     "repository":
     {
