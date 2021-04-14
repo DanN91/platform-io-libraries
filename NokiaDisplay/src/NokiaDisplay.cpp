@@ -112,39 +112,53 @@ void NokiaDisplay::setCursor(byte line, byte column)
 	}
 }
 
-void NokiaDisplay::writeText(const char* text)
+void NokiaDisplay::write(const char* text)
 {
 	if (m_isCursorValid)
 	{
 		// Write char by char
 		while (*text)
-		{
 			writeChar(*text++);
-		}
 	}
 }
 
-void NokiaDisplay::writeText(String&& text)
+void NokiaDisplay::write(String&& text)
 {
-	writeText(text.c_str());
+	write(text.c_str());
 }
 
-void NokiaDisplay::writeText(String& text)
+void NokiaDisplay::write(String& text)
 {
-	writeText(text.c_str());
+	write(text.c_str());
+}
+
+void NokiaDisplay::write(uint32_t number)
+{
+    // number of digits
+    uint8_t nrOfDigits = 0;
+    auto temp = number;
+    while (temp > 0)
+    {
+        temp /= 10;
+        nrOfDigits++;
+    }
+
+    // write digit by digit, from front
+    while (nrOfDigits > 0)
+    {
+        uint32_t moduloBy = ceil(pow(10, nrOfDigits));
+        writeDigit((number % moduloBy) / (moduloBy / 10));
+        nrOfDigits--;
+    }
 }
 
 void NokiaDisplay::writeChar(byte character)
 {
     if (character >= 0x80)
-    {
         return;
-    }
 
     for (byte i = 0; i < 5; i++)
-    {
         send(OpType::DATA, pgm_read_byte_near(&ASCII[character - 0x20][i]));
-    }
 
     send(OpType::DATA, 0x00);
 
@@ -153,9 +167,25 @@ void NokiaDisplay::writeChar(byte character)
 
     // Next line?
     if (m_column == 0)
-    {
         m_line = (m_line + 1) % (height / 9 + 1);
-    }
+}
+
+void NokiaDisplay::writeDigit(byte digit)
+{
+    if (digit < 0 || digit > 0x9)
+        return;
+
+    for (byte i = 0; i < 5; i++)
+        send(OpType::DATA, pgm_read_byte_near(&ASCII[0x10 + digit][i]));
+
+    send(OpType::DATA, 0x00);
+
+    // Update the cursor position
+    m_column = (m_column + 6) % width;
+
+    // Next line?
+    if (m_column == 0)
+        m_line = (m_line + 1) % (height / 9 + 1);
 }
 
 void NokiaDisplay::send(OpType type, byte data)
@@ -165,4 +195,3 @@ void NokiaDisplay::send(OpType type, byte data)
     shiftOut(m_sdin, m_sclk, MSBFIRST, data);
     digitalWrite(m_sce, HIGH);
 }
-

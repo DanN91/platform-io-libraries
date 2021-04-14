@@ -24,11 +24,11 @@ public:
     // Place the cursor at position...
     void setCursor(byte line, byte column);
 
-    // Write text
-    void writeText(const char* text);
-
-    void writeText(String&& text);
-    void writeText(String& text);
+    // Write various types
+    void write(const char* text);
+    void write(String&& text);
+    void write(String& text);
+    void write(uint32_t number);
 
 private:
 	NokiaDisplay(byte reset, byte chipEnable, byte dataSelect, byte dataIn, byte clock);
@@ -47,6 +47,7 @@ private:
 
     // Write ASCII char and update the cursor
     void writeChar(byte character);
+    void writeDigit(byte digit);
 
     // Send a command or data to the display...
     void send(OpType type, byte data);

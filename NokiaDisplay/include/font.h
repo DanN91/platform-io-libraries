@@ -1,5 +1,6 @@
 // 5 x 8 font
-// index = ASCII - 32
+// char index = ASCII - 32 (0x20)
+// digit index = 16 + digit (0x10)
 #include <avr/pgmspace.h>
 
 // The 7-bit ASCII character set...
