@@ -38,6 +38,8 @@ bool RangeValuesGenerator::Range(uint8_t min, uint8_t max)
     m_minimum = min;
     m_maximum = max;
     m_current = m_minimum; // start from min
+
+    return true;
 }
 
 RangeValuesGenerator::ValuesRange RangeValuesGenerator::Range() const
