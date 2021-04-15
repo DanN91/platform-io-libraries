@@ -1,0 +1,28 @@
+{
+    "name": "PushButton",
+    "version": "1.0.0",
+    "description": "Observable Pushbutton which notifies its observers when Pressed, Released and Held events happen",
+    "keywords": "push, button, event, observer",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/DanN91/platform-io-libraries.git#PushButton"
+    },
+    "authors":
+    [
+      {
+        "name": "Daniel Nistor",
+        "email": "nisdan91@gmail.com",
+        "maintainer": true
+      }
+    ],
+    "license": "MIT",
+    "frameworks": "Arduino",
+    "platforms": "*",
+    "build_unflags": "-std=c++99",
+    "build_flags": "-std=c++17",
+    "dependencies":
+    {
+        "ObserverPattern": "https://github.com/DanN91/platform-io-libraries.git#ObserverPattern"
+    }
+  }
