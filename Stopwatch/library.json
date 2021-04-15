@@ -1,0 +1,28 @@
+{
+    "name": "Stopwatch",
+    "version": "1.0.0",
+    "description": "Track time in milliseconds or seconds by using a pushbutton for starting and stopping the watch.",
+    "keywords": "time, track, button, stopwatch",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/DanN91/platform-io-libraries.git#Stopwatch"
+    },
+    "authors":
+    [
+      {
+        "name": "Daniel Nistor",
+        "email": "nisdan91@gmail.com",
+        "maintainer": true
+      }
+    ],
+    "license": "MIT",
+    "frameworks": "Arduino",
+    "platforms": "*",
+    "build_unflags": "-std=c++99",
+    "build_flags": "-std=c++17",
+    "dependencies":
+    {
+        "PushButton": "https://github.com/DanN91/platform-io-libraries.git#PushButton"
+    }
+  }
