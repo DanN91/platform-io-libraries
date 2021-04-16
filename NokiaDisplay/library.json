@@ -1,7 +1,7 @@
 {
   "name": "Nokia Display",
   "version": "1.0.0",
-  "description": "Play a song by notes on a buzzer or a speaker.",
+  "description": "Interface over Nokia 5110 display offering basic functionality",
   "keywords": "5110, display, nokia, lcd",
   "repository":
   {

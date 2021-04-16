@@ -174,7 +174,7 @@ void NokiaDisplay::WriteChar(uint8_t character)
         return;
 
     for (uint8_t i = 0; i < 5; i++)
-        Send(OpType::DATA, pgm_read_uint8_t_near(&ASCII[character - 0x20][i]));
+        Send(OpType::DATA, pgm_read_byte_near(&ASCII[character - 0x20][i]));
 
     Send(OpType::DATA, 0x00);
 
@@ -187,7 +187,7 @@ void NokiaDisplay::WriteDigit(uint8_t digit)
         return;
 
     for (uint8_t i = 0; i < 5; i++)
-        Send(OpType::DATA, pgm_read_uint8_t_near(&ASCII[0x10 + digit][i]));
+        Send(OpType::DATA, pgm_read_byte_near(&ASCII[0x10 + digit][i]));
 
     Send(OpType::DATA, 0x00);
 
