@@ -1,17 +1,35 @@
-// 
-// 
-// 
+/*
+    NokiaDisplay: wrapper over Nokia 5110 display ( 5x8 font, CHIP PCD8544 ) providing basic functionality.
+    Adapted after PCD8544 library, Copyright (c) 2010 Carlos Rodrigues
+    Author: Daniel Nistor
+    MIT License, 2021
+*/
 #include "NokiaDisplay.h"
 #include "font.h"
 
 namespace
 {
-    const byte width = 84;
-    const byte height = 48;
-	const byte MAX_LINES_COUNT = 6;
+    constexpr uint8_t WIDTH = 84;
+    constexpr uint8_t HEIGHT = 48;
+	constexpr uint8_t MAX_LINES_COUNT = 6;
+
+    uint8_t GetDigitsCount(uint32_t number)
+    {
+        if (number == 0)
+            return 1; // 0 is a digit
+
+        uint8_t nrOfDigits = 0;
+        while (number > 0)
+        {
+            number /= 10;
+            nrOfDigits++;
+        }
+
+        return nrOfDigits;
+    }
 }
 
-NokiaDisplay::NokiaDisplay(byte reset, byte chipEnable, byte dataSelect, byte dataIn, byte clock)
+NokiaDisplay::NokiaDisplay(uint8_t reset, uint8_t chipEnable, uint8_t dataSelect, uint8_t dataIn, uint8_t clock)
     : m_reset(reset)
     , m_sce(chipEnable)
     , m_dc(dataSelect)
@@ -20,13 +38,13 @@ NokiaDisplay::NokiaDisplay(byte reset, byte chipEnable, byte dataSelect, byte da
 {
 }
 
-NokiaDisplay& NokiaDisplay::getInstance(byte reset, byte chipEnable, byte dataSelect, byte dataIn, byte clock)
+NokiaDisplay& NokiaDisplay::getInstance(uint8_t reset, uint8_t chipEnable, uint8_t dataSelect, uint8_t dataIn, uint8_t clock)
 {
     static NokiaDisplay instance(reset, chipEnable, dataSelect, dataIn, clock);
     return instance;
 }
 
-void NokiaDisplay::initialize()
+void NokiaDisplay::Initialize()
 {
     // All pins are outputs
     pinMode(m_sclk,  OUTPUT);
@@ -43,155 +61,182 @@ void NokiaDisplay::initialize()
     digitalWrite(m_reset, HIGH);
 
     // Set the LCD parameters
-    send(OpType::CMD, 0x21);  // extended instruction set control (H=1)
-    send(OpType::CMD, 0x13);  // bias system (1:48)
+    Send(OpType::CMD, 0x21);  // extended instruction set control (H=1)
+    Send(OpType::CMD, 0x13);  // bias system (1:48)
 
-    send(OpType::CMD, 0xc2);  // default Vop (3.06 + 66 * 0.06 = 7V)
+    Send(OpType::CMD, 0xc2);  // default Vop (3.06 + 66 * 0.06 = 7V)
 
-    send(OpType::CMD, 0x20);  // extended instruction set control (H=0)
-    send(OpType::CMD, 0x09);  // all display segments on
+    Send(OpType::CMD, 0x20);  // extended instruction set control (H=0)
+    Send(OpType::CMD, 0x09);  // all display segments on
 
     // Clear RAM on Display
-    clear();
+    Clear();
 
     // Activate LCD
-    send(OpType::CMD, 0x08);  // display blank
-    send(OpType::CMD, 0x0c);  // normal mode (0x0d = inverse mode)
+    Send(OpType::CMD, 0x08);  // display blank
+    Send(OpType::CMD, 0x0c);  // normal mode (0x0d = inverse mode)
     delay(100);
 
     // Place the cursor at the origin...
-    send(OpType::CMD, 0x80);
-    send(OpType::CMD, 0x40);
+    Send(OpType::CMD, 0x80);
+    Send(OpType::CMD, 0x40);
 }
 
-void NokiaDisplay::clear()
+void NokiaDisplay::Clear()
 {
-    setCursor(0, 0);
+    SetCursor(0, 0);
 
-    for (auto&& i = 0; i < width * (height / 8); i++)
-    {
-        send(OpType::DATA, 0x00);
-    }
+    for (auto&& i = 0; i < WIDTH * (HEIGHT / 8); i++)
+        Send(OpType::DATA, 0x00);
 
-    setCursor(0, 0);
+    SetCursor(0, 0);
 }
 
-void NokiaDisplay::clearLine()
+void NokiaDisplay::ClearLine()
 {
-    setCursor(m_line, m_column);
+    SetCursor(m_line, m_column);
 
-    for (byte&& i = 0; i < width; i++)
-        send(OpType::DATA, 0x00);
+    for (uint8_t&& i = 0; i < WIDTH; i++)
+        Send(OpType::DATA, 0x00);
 
-    setCursor(m_line, m_column);
+    SetCursor(m_line, m_column);
 }
 
-void NokiaDisplay::setContrast(byte level)
+void NokiaDisplay::SetContrast(uint8_t level)
 {
     // The PCD8544 datasheet specifies a maximum Vop of 8.5V
     if (level > 90)
-    {
         level = 90;  // Vop = 3.06 + 90 * 0.06 = 8.46V
-    }
 
-    send(OpType::CMD, 0x21);  // extended instruction set control (H=1)
-    send(OpType::CMD, 0x80 | (level & 0x7f));
-    send(OpType::CMD, 0x20);  // extended instruction set control (H=0)
+    Send(OpType::CMD, 0x21);  // extended instruction set control (H=1)
+    Send(OpType::CMD, 0x80 | (level & 0x7f));
+    Send(OpType::CMD, 0x20);  // extended instruction set control (H=0)
 }
 
-void NokiaDisplay::setCursor(byte line, byte column)
+void NokiaDisplay::SetCursor(uint8_t line, uint8_t column)
 {
 	m_isCursorValid = (line < MAX_LINES_COUNT) ? true : false;
-	if (m_isCursorValid)
-	{
-		m_column = (column % width);
-		m_line = (line % (height / 9 + 1));
+	if (!m_isCursorValid)
+        return;
 
-		send(OpType::CMD, 0x80 | m_column);
-		send(OpType::CMD, 0x40 | m_line);
-	}
+    m_column = (column % WIDTH);
+    m_line = (line % (HEIGHT / 9 + 1));
+
+    Send(OpType::CMD, 0x80 | m_column);
+    Send(OpType::CMD, 0x40 | m_line);
 }
 
-void NokiaDisplay::write(const char* text)
+void NokiaDisplay::Write(const char* text)
 {
-	if (m_isCursorValid)
-	{
-		// Write char by char
-		while (*text)
-			writeChar(*text++);
-	}
+	if (!m_isCursorValid)
+        return;
+
+    // Write char by char
+    while (*text)
+        WriteChar(*text++);
 }
 
-void NokiaDisplay::write(String&& text)
+void NokiaDisplay::Write(String&& text)
 {
-	write(text.c_str());
+	Write(text.c_str());
 }
 
-void NokiaDisplay::write(String& text)
+void NokiaDisplay::Write(String& text)
 {
-	write(text.c_str());
+	Write(text.c_str());
 }
 
-void NokiaDisplay::write(uint32_t number)
+void NokiaDisplay::Write(uint32_t number)
 {
-    // number of digits
-    uint8_t nrOfDigits = 0;
-    auto temp = number;
-    while (temp > 0)
+    // Write digit by digit, from front
+    for (uint8_t i = GetDigitsCount(number); i > 0; --i)
     {
-        temp /= 10;
-        nrOfDigits++;
-    }
-
-    // write digit by digit, from front
-    while (nrOfDigits > 0)
-    {
-        uint32_t moduloBy = ceil(pow(10, nrOfDigits));
-        writeDigit((number % moduloBy) / (moduloBy / 10));
-        nrOfDigits--;
+        uint32_t moduloBy = ceil(pow(10, i));
+        WriteDigit((number % moduloBy) / (moduloBy / 10));
     }
 }
 
-void NokiaDisplay::writeChar(byte character)
+void NokiaDisplay::Write(uint8_t line, const char* text, Aligned aligned)
+{
+    SetCursor(line, ColumnPixelPosition(SizeInPixels(text), aligned));
+    Write(text);
+}
+
+void NokiaDisplay::Write(uint8_t line, uint32_t number, Aligned aligned)
+{
+    SetCursor(line, ColumnPixelPosition(SizeInPixels(number), aligned));
+    Write(number);
+}
+
+void NokiaDisplay::WriteChar(uint8_t character)
 {
     if (character >= 0x80)
         return;
 
-    for (byte i = 0; i < 5; i++)
-        send(OpType::DATA, pgm_read_byte_near(&ASCII[character - 0x20][i]));
+    for (uint8_t i = 0; i < 5; i++)
+        Send(OpType::DATA, pgm_read_uint8_t_near(&ASCII[character - 0x20][i]));
 
-    send(OpType::DATA, 0x00);
+    Send(OpType::DATA, 0x00);
 
-    // Update the cursor position
-    m_column = (m_column + 6) % width;
-
-    // Next line?
-    if (m_column == 0)
-        m_line = (m_line + 1) % (height / 9 + 1);
+    UpdateCursor();
 }
 
-void NokiaDisplay::writeDigit(byte digit)
+void NokiaDisplay::WriteDigit(uint8_t digit)
 {
     if (digit < 0 || digit > 0x9)
         return;
 
-    for (byte i = 0; i < 5; i++)
-        send(OpType::DATA, pgm_read_byte_near(&ASCII[0x10 + digit][i]));
+    for (uint8_t i = 0; i < 5; i++)
+        Send(OpType::DATA, pgm_read_uint8_t_near(&ASCII[0x10 + digit][i]));
 
-    send(OpType::DATA, 0x00);
+    Send(OpType::DATA, 0x00);
 
-    // Update the cursor position
-    m_column = (m_column + 6) % width;
-
-    // Next line?
-    if (m_column == 0)
-        m_line = (m_line + 1) % (height / 9 + 1);
+    UpdateCursor();
 }
 
-void NokiaDisplay::send(OpType type, byte data)
+uint8_t NokiaDisplay::SizeInPixels(const char* text) const
+{
+    const uint8_t length = strlen(text);
+    return (length * 5) + (length - 1);
+}
+
+uint8_t NokiaDisplay::SizeInPixels(uint32_t number) const
+{
+    const uint8_t digitsCount = GetDigitsCount(number);
+    return (digitsCount * 5) + (digitsCount - 1);
+}
+
+uint8_t NokiaDisplay::ColumnPixelPosition(uint8_t sizeInPixels, Aligned aligned) const
+{
+    switch (aligned)
+    {
+        case Aligned::Left:
+            return 0;
+
+        case Aligned::Center:
+            return (WIDTH - sizeInPixels) / 2;
+
+        case Aligned::Right:
+            return (WIDTH - sizeInPixels);
+    }
+
+    return 0;
+}
+
+void NokiaDisplay::Send(OpType type, uint8_t data)
 {
     digitalWrite(m_dc, (uint8_t)type); // DC pin is LOW for commands
     digitalWrite(m_sce, LOW);
     shiftOut(m_sdin, m_sclk, MSBFIRST, data);
     digitalWrite(m_sce, HIGH);
+}
+
+void NokiaDisplay::UpdateCursor()
+{
+    // Update the cursor position
+    m_column = (m_column + 6) % WIDTH;
+
+    // Next line?
+    if (m_column == 0)
+        m_line = (m_line + 1) % (HEIGHT / 9 + 1);
 }
