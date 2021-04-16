@@ -1,0 +1,25 @@
+{
+    "name": "WaterPump",
+    "version": "1.0.0",
+    "description": "Simple interface over one-pin water pump hardware.",
+    "keywords": "pump, water, one-pin",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/DanN91/platform-io-libraries.git#WaterPump"
+    },
+    "authors":
+    [
+      {
+        "name": "Daniel Nistor",
+        "email": "nisdan91@gmail.com",
+        "maintainer": true
+      }
+    ],
+    "license": "MIT",
+    "frameworks": "Arduino",
+    "platforms": "*",
+    "build_unflags": "-std=c++99",
+    "build_flags": "-std=c++17"
+  }
+  
