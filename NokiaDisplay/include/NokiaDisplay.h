@@ -29,8 +29,8 @@ public:
 
     // Write various types
     void Write(const char* text);
-    void Write(String&& text);
-    void Write(String& text);
+    void Write(char character);
+    void Write(const String& text);
     void Write(uint32_t number);
 
     enum class Aligned : uint8_t

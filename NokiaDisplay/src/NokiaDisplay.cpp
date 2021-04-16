@@ -136,12 +136,12 @@ void NokiaDisplay::Write(const char* text)
         WriteChar(*text++);
 }
 
-void NokiaDisplay::Write(String&& text)
+void NokiaDisplay::Write(char character)
 {
-	Write(text.c_str());
+    WriteChar(character);
 }
 
-void NokiaDisplay::Write(String& text)
+void NokiaDisplay::Write(const String& text)
 {
 	Write(text.c_str());
 }
