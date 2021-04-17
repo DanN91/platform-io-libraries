@@ -216,14 +216,9 @@ uint8_t NokiaDisplay::ColumnPixelPosition(uint8_t sizeInPixels, Aligned aligned)
 {
     switch (aligned)
     {
-        case Aligned::Left:
-            return 0;
-
-        case Aligned::Center:
-            return (WIDTH - sizeInPixels) / 2;
-
-        case Aligned::Right:
-            return (WIDTH - sizeInPixels);
+        case Aligned::Left: return 6; // after the cursor
+        case Aligned::Center: return (WIDTH - sizeInPixels) / 2;
+        case Aligned::Right: return (WIDTH - sizeInPixels);
     }
 
     return 0;
