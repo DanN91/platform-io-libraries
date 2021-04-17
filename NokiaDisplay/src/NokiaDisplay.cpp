@@ -162,6 +162,12 @@ void NokiaDisplay::Write(uint8_t line, const char* text, Aligned aligned)
     Write(text);
 }
 
+void NokiaDisplay::Write(uint8_t line, const String& text, Aligned aligned)
+{
+    SetCursor(line, ColumnPixelPosition(SizeInPixels(text.c_str()), aligned));
+    Write(text);
+}
+
 void NokiaDisplay::Write(uint8_t line, uint32_t number, Aligned aligned)
 {
     SetCursor(line, ColumnPixelPosition(SizeInPixels(number), aligned));

@@ -41,6 +41,7 @@ public:
     };
 
     void Write(uint8_t line, const char* text, Aligned aligned);
+    void Write(uint8_t line, const String& text, Aligned aligned);
     void Write(uint8_t line, uint32_t number, Aligned aligned);
 
 private:
