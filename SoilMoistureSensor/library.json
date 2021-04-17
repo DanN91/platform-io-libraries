@@ -1,0 +1,25 @@
+{
+    "name": "SoilMoistureSensor",
+    "version": "1.0.0",
+    "description": "Simple interface over one-analog-pin soil moisture sensor hardware",
+    "keywords": "soil, moisture, sensor, one-pin",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/DanN91/platform-io-libraries.git#SoilMoistureSensor"
+    },
+    "authors":
+    [
+      {
+        "name": "Daniel Nistor",
+        "email": "nisdan91@gmail.com",
+        "maintainer": true
+      }
+    ],
+    "license": "MIT",
+    "frameworks": "Arduino",
+    "platforms": "*",
+    "build_unflags": "-std=c++99",
+    "build_flags": "-std=c++17"
+  }
+  
