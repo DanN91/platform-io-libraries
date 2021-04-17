@@ -1,0 +1,29 @@
+{
+    "name": "MenuCursor",
+    "version": "1.0.0",
+    "description": "Range-based cursor which observes a pushbutton and draws a cursor on a Nokia 5110 display on the current line.",
+    "keywords": "nokia, display, menu, cursor",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/DanN91/platform-io-libraries.git#NokiaDisplay"
+    },
+    "authors":
+    [
+      {
+        "name": "Daniel Nistor",
+        "email": "nisdan91@gmail.com",
+        "maintainer": true
+      }
+    ],
+    "license": "MIT",
+    "frameworks": "Arduino",
+    "platforms": "*",
+    "build_unflags": "-std=c++99",
+    "build_flags": "-std=c++17",
+    "dependencies": {
+        "PushButton": "https://github.com/DanN91/platform-io-libraries.git#PushButton",
+        "RangeValuesGenerator": "https://github.com/DanN91/platform-io-libraries.git#RangeValuesGenerator",
+        "NokiaDisplay": "https://github.com/DanN91/platform-io-libraries.git#NokiaDisplay"
+    }
+  }
