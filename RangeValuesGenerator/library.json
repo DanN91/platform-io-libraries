@@ -1,5 +1,5 @@
 {
-    "name": "Range Values Generator",
+    "name": "RangeValuesGenerator",
     "version": "1.0.0",
     "description": "Generate values in a set range everytime you push a button",
     "keywords": "generator, button, range",
