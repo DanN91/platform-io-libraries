@@ -15,7 +15,7 @@
 class MenuCursor final
 {
 public:
-    MenuCursor(NokiaDisplay& display, PushButton& button, char cursor);
+    MenuCursor(NokiaDisplay& display, PushButton& button, char cursor, uint8_t items);
     ~MenuCursor() = default;
 
     void Refresh();

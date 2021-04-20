@@ -6,9 +6,9 @@
 
 #include "MenuCursor.h"
 
-MenuCursor::MenuCursor(NokiaDisplay& display, PushButton& button, char cursor)
+MenuCursor::MenuCursor(NokiaDisplay& display, PushButton& button, char cursor, uint8_t items)
     : m_display(display)
-    , m_generator(2, 5, button)
+    , m_generator(2, 2 + items - 1, button)
     , m_cursor(cursor)
 {
 }
