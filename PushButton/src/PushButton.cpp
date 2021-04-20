@@ -7,7 +7,7 @@
 namespace
 {
     constexpr const uint16_t DEBOUNCE_DELAY_MS = 50;
-    constexpr const uint16_t HELD_THRESHOLD_MS = 1000;
+    constexpr const uint16_t HELD_THRESHOLD_MS = 700;
 } // anonymous
 
 PushButton::PushButton(uint8_t pin, uint8_t MAX_OBSERVERS_COUNT)
