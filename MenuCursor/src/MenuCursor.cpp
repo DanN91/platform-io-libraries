@@ -4,8 +4,6 @@
     MIT License, 2021
 */
 
-#pragma once
-
 #include "MenuCursor.h"
 
 MenuCursor::MenuCursor(NokiaDisplay& display, PushButton& button, char cursor)
