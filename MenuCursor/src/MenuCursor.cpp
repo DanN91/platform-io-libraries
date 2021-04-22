@@ -6,15 +6,23 @@
 
 #include "MenuCursor.h"
 
+namespace
+{
+    constexpr const uint8_t LINE_OFFSET = 2;
+} // anonymous
+
 MenuCursor::MenuCursor(NokiaDisplay& display, PushButton& button, char cursor, uint8_t items)
     : m_display(display)
-    , m_generator(2, 2 + items - 1, button)
+    , m_generator(LINE_OFFSET, (LINE_OFFSET + items) - 1, button)
     , m_cursor(cursor)
 {
 }
 
 void MenuCursor::Refresh()
 {
+    if (!m_generator.IsValid())
+        return;
+
     if (const auto newIndex = m_generator.Value(); newIndex != m_lastIndex)
     {
         Erase();

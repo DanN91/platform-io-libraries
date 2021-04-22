@@ -32,6 +32,6 @@ private:
 
     NokiaDisplay& m_display;
     RangeValuesGenerator m_generator;
-    uint8_t m_lastIndex = 255;
+    uint8_t m_lastIndex = 0;
     const char m_cursor = '>';
 };
