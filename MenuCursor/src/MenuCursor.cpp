@@ -13,7 +13,7 @@ namespace
 
 MenuCursor::MenuCursor(NokiaDisplay& display, PushButton& button, char cursor, uint8_t items)
     : m_display(display)
-    , m_generator(LINE_OFFSET, (LINE_OFFSET + items) - 1, button)
+    , m_generator(LINE_OFFSET, (LINE_OFFSET + items) - 1, 1, button)
     , m_cursor(cursor)
 {
 }
