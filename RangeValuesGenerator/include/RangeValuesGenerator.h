@@ -13,7 +13,7 @@
 class RangeValuesGenerator final : IObserver<ButtonState>
 {
 public:
-    RangeValuesGenerator(uint8_t min, uint8_t max, IObservable<ButtonState>& button);
+    RangeValuesGenerator(uint16_t min, uint16_t max, uint8_t step, IObservable<ButtonState>& button);
     ~RangeValuesGenerator() = default;
 
     // IObserver<ButtonState>
@@ -21,27 +21,32 @@ public:
 
     struct ValuesRange
     {
-        uint8_t minVal = 0;
-        uint8_t maxVal = 0;
+        uint16_t minVal = 0;
+        uint16_t maxVal = 0;
 
-        ValuesRange(uint8_t min, uint8_t max)
+        ValuesRange(uint16_t min, uint16_t max)
             : minVal(min)
             , maxVal(max)
         {}
     };
 
     [[nodiscard]]
-    uint8_t Value() const;
+    uint16_t Value() const;
 
     [[nodiscard]]
-    bool Range(uint8_t min, uint8_t max);
+    bool Range(uint16_t min, uint16_t max);
 
     [[nodiscard]]
     ValuesRange Range() const;
 
-private:
-    uint8_t m_minimum = 0;
-    uint8_t m_maximum = 0;
+    [[nodiscard]]
+    bool IsValid() const;
 
-    uint8_t m_current = 0;
+private:
+    uint16_t m_minimum = 0;
+    uint16_t m_maximum = 0;
+    uint8_t m_step = 0;
+    bool m_isRangeValid = false;
+
+    uint16_t m_current = 0;
 };
