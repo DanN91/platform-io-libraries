@@ -58,5 +58,5 @@ public:
 private:
     T m_data[N] = {};
     size_t m_count = 0;
-    const size_t m_capacity = 0;
+    size_t m_capacity = 0;
 };
