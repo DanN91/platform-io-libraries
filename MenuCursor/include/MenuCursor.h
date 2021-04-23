@@ -19,7 +19,7 @@ public:
     ~MenuCursor() = default;
 
     void Range(ValuesRange range);
-    void Refresh();
+    void Refresh(bool force = false);
 
     // non-copyable & non-movable
     MenuCursor(const MenuCursor&) = delete;

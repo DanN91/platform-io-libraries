@@ -23,12 +23,12 @@ void MenuCursor::Range(ValuesRange range)
     m_generator.Range({ LINE_OFFSET + range.Min(), LINE_OFFSET + range.Max() });
 }
 
-void MenuCursor::Refresh()
+void MenuCursor::Refresh(bool force)
 {
     if (!m_generator.IsValid())
         return;
 
-    if (const auto newIndex = m_generator.Value(); newIndex != m_lastIndex)
+    if (const auto newIndex = m_generator.Value(); force || newIndex != m_lastIndex)
     {
         Erase();
         Draw(newIndex);
@@ -37,9 +37,6 @@ void MenuCursor::Refresh()
 
 void MenuCursor::Draw(uint8_t lineIndex)
 {
-    if (m_lastIndex == lineIndex)
-        return;
-
     m_lastIndex = lineIndex;
     m_display.SetCursor(m_lastIndex, 0);
     m_display.Write(m_cursor);
