@@ -41,8 +41,7 @@ public:
     [[nodiscard]]
     uint16_t Value() const;
 
-    [[nodiscard]]
-    bool Range(ValuesRange range);
+    void Range(ValuesRange range);
 
     [[nodiscard]]
     ValuesRange Range() const;

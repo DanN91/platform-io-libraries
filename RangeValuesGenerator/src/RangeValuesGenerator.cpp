@@ -30,15 +30,10 @@ uint16_t RangeValuesGenerator::Value() const
     return m_current;
 }
 
-bool RangeValuesGenerator::Range(ValuesRange range)
+void RangeValuesGenerator::Range(ValuesRange range)
 {
-    if (!range)
-        return false; // exceeds data type or invalid
-
     m_range = range;
     m_current = m_range.Min(); // start from min
-
-    return true;
 }
 
 ValuesRange RangeValuesGenerator::Range() const
