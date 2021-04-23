@@ -18,6 +18,7 @@ public:
     MenuCursor(NokiaDisplay& display, PushButton& button, char cursor, uint8_t items);
     ~MenuCursor() = default;
 
+    void Range(ValuesRange range);
     void Refresh();
 
     // non-copyable & non-movable
