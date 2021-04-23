@@ -10,31 +10,39 @@
 #include <PushButtonMasks.h>
 #include <ObserverPattern.h>
 
+struct ValuesRange
+{
+    ValuesRange(uint16_t min, uint16_t max)
+        : minVal(min)
+        , maxVal(max)
+    {}
+
+    uint16_t Min() const { return minVal; }
+    uint16_t Max() const { return maxVal; }
+
+    bool IsInRange(uint16_t value) const { return value >= Min() && value <= Max(); }
+
+    explicit operator bool() const noexcept { return Min() < Max(); }
+
+private:
+    uint16_t minVal = 0;
+    uint16_t maxVal = 0;
+};
+
 class RangeValuesGenerator final : IObserver<ButtonState>
 {
 public:
-    RangeValuesGenerator(uint16_t min, uint16_t max, uint8_t step, IObservable<ButtonState>& button);
+    RangeValuesGenerator(ValuesRange range, uint8_t step, uint16_t start, IObservable<ButtonState>& button);
     ~RangeValuesGenerator() = default;
 
     // IObserver<ButtonState>
     void OnEvent(ButtonState event) override;
 
-    struct ValuesRange
-    {
-        uint16_t minVal = 0;
-        uint16_t maxVal = 0;
-
-        ValuesRange(uint16_t min, uint16_t max)
-            : minVal(min)
-            , maxVal(max)
-        {}
-    };
-
     [[nodiscard]]
     uint16_t Value() const;
 
     [[nodiscard]]
-    bool Range(uint16_t min, uint16_t max);
+    bool Range(ValuesRange range);
 
     [[nodiscard]]
     ValuesRange Range() const;
@@ -43,10 +51,8 @@ public:
     bool IsValid() const;
 
 private:
-    uint16_t m_minimum = 0;
-    uint16_t m_maximum = 0;
+    ValuesRange m_range;
     uint8_t m_step = 0;
-    bool m_isRangeValid = false;
 
     uint16_t m_current = 0;
 };

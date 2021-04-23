@@ -8,19 +8,20 @@
 
 #include <PushButton.h>
 
-RangeValuesGenerator::RangeValuesGenerator(uint16_t min, uint16_t max, uint8_t step, IObservable<ButtonState>& button)
+RangeValuesGenerator::RangeValuesGenerator(ValuesRange range, uint8_t step, uint16_t start, IObservable<ButtonState>& button)
     : IObserver<ButtonState>(ButtonState::Released, button)
+    , m_range(range)
     , m_step(step)
+    , m_current(m_range.IsInRange(start) ? start : m_range.Min())
 {
-    Range(min, max);
 }
 
 void RangeValuesGenerator::OnEvent(ButtonState event)
 {
-    if (m_isRangeValid && event == ButtonState::Released)
+    if (m_range && event == ButtonState::Released)
     {
         const auto nextValue = m_current + m_step;
-        m_current = (nextValue > m_maximum) ? m_minimum : nextValue;
+        m_current = (nextValue > m_range.Max()) ? m_range.Min() : nextValue;
     }
 }
 
@@ -29,28 +30,23 @@ uint16_t RangeValuesGenerator::Value() const
     return m_current;
 }
 
-bool RangeValuesGenerator::Range(uint16_t min, uint16_t max)
+bool RangeValuesGenerator::Range(ValuesRange range)
 {
-    if (min >= max)
-    {
-        m_isRangeValid = false;
-        return m_isRangeValid; // exceeds data type or invalid
-    }
+    if (!range)
+        return false; // exceeds data type or invalid
 
-    m_minimum = min;
-    m_maximum = max;
-    m_current = m_minimum; // start from min
-    m_isRangeValid = true;
+    m_range = range;
+    m_current = m_range.Min(); // start from min
 
     return true;
 }
 
-RangeValuesGenerator::ValuesRange RangeValuesGenerator::Range() const
+ValuesRange RangeValuesGenerator::Range() const
 {
-    return { m_minimum, m_maximum };
+    return m_range;
 }
 
 bool RangeValuesGenerator::IsValid() const
 {
-    return m_isRangeValid;
+    return m_range ? true : false;
 }
