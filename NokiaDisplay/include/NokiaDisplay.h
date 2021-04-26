@@ -11,8 +11,8 @@
 class NokiaDisplay final
 {
 public:
-    // One instance
-    static NokiaDisplay& getInstance(uint8_t reset, uint8_t chipEnable, uint8_t dataSelect, uint8_t dataIn, uint8_t clock);
+    NokiaDisplay(uint8_t reset, uint8_t chipEnable, uint8_t dataSelect, uint8_t dataIn, uint8_t clock);
+    ~NokiaDisplay() = default;
 
     // 84 x 48 dimension
     void Initialize();
@@ -44,15 +44,13 @@ public:
     void Write(uint8_t line, const String& text, Aligned aligned);
     void Write(uint8_t line, uint32_t number, Aligned aligned);
 
-private:
-	NokiaDisplay(uint8_t reset, uint8_t chipEnable, uint8_t dataSelect, uint8_t dataIn, uint8_t clock);
-
-	// singleton
+	// non-copyable & non-movable
     NokiaDisplay(const NokiaDisplay&) = delete;
     NokiaDisplay& operator=(const NokiaDisplay&) = delete;
     NokiaDisplay(NokiaDisplay&&) = delete;
     NokiaDisplay& operator=(NokiaDisplay&&) = delete;
 
+private:
     enum class OpType : uint8_t
     {
         CMD = 0,

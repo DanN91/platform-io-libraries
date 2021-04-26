@@ -38,12 +38,6 @@ NokiaDisplay::NokiaDisplay(uint8_t reset, uint8_t chipEnable, uint8_t dataSelect
 {
 }
 
-NokiaDisplay& NokiaDisplay::getInstance(uint8_t reset, uint8_t chipEnable, uint8_t dataSelect, uint8_t dataIn, uint8_t clock)
-{
-    static NokiaDisplay instance(reset, chipEnable, dataSelect, dataIn, clock);
-    return instance;
-}
-
 void NokiaDisplay::Initialize()
 {
     // All pins are outputs
