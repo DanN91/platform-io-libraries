@@ -8,8 +8,8 @@
 
 namespace
 {
-    constexpr const uint16_t AIR_VALUE = 596;
-    constexpr const uint16_t WATER_VALUE = 260;
+    constexpr const uint16_t AIR_VALUE = 684;
+    constexpr const uint16_t WATER_VALUE = 350;
 } // anonymous
 
 SoilMoistureSensor::SoilMoistureSensor(uint8_t analogPin)
@@ -19,6 +19,5 @@ SoilMoistureSensor::SoilMoistureSensor(uint8_t analogPin)
 
 uint8_t SoilMoistureSensor::Value() const
 {
-    const uint8_t moisturePercent = map(analogRead(m_pin), AIR_VALUE, WATER_VALUE, 0, 100);
-    return (moisturePercent >= 100) ? 100 : moisturePercent;
+    return constrain(map(analogRead(m_pin), AIR_VALUE, WATER_VALUE, 0, 100), 0, 100);
 }
