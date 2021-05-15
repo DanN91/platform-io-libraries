@@ -20,6 +20,7 @@ public:
 
     void Range(ValuesRange range);
     void Refresh(bool force = false);
+    uint8_t Value() const;
 
     // non-copyable & non-movable
     MenuCursor(const MenuCursor&) = delete;

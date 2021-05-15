@@ -35,6 +35,11 @@ void MenuCursor::Refresh(bool force)
     }
 }
 
+uint8_t MenuCursor::Value() const
+{
+    return m_generator.Value();
+}
+
 void MenuCursor::Draw(uint8_t lineIndex)
 {
     m_lastIndex = lineIndex;
