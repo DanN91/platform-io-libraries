@@ -19,6 +19,7 @@ public:
         for (uint8_t i = 0; i < m_observersCount; ++i)
             m_observers[i] = nullptr;
     }
+
     virtual ~IObservable()
     {
         for (auto i = 0; i < m_observersCount; ++i)
@@ -48,6 +49,7 @@ public:
         if (freeSlotIndex < m_observersCount)
             m_observers[freeSlotIndex] = observer;
     }
+
     void Unregister(IObserver<T>* observer)
     {
         if (observer == nullptr)
@@ -104,6 +106,7 @@ public:
     // Handler
     virtual void OnEvent(T event) = 0;
     bool IsOfInterest(T event) const { return (m_events & event) == event; }
+    T Events() const { return m_events; }
 
     // non-copyable & non-movable
     IObserver(const IObserver&) = delete;
