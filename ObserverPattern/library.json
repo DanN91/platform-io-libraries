@@ -16,6 +16,9 @@
         "maintainer": true
       }
     ],
+    "dependencies": {
+        "Vector": "https://github.com/DanN91/platform-io-libraries.git#Vector"
+    },
     "license": "MIT",
     "frameworks": "Arduino",
     "platforms": "*",

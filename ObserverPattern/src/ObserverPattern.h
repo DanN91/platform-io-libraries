@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <Vector.h>
+
 template<typename T>
 class IObserver;
 
@@ -12,21 +14,14 @@ class IObservable
 {
 public:
     explicit IObservable(uint8_t MAX_OBSERVERS_COUNT)
-        : m_observersCount(MAX_OBSERVERS_COUNT)
     {
-        m_observers = new IObserver<T>*[MAX_OBSERVERS_COUNT];
-
-        for (uint8_t i = 0; i < m_observersCount; ++i)
-            m_observers[i] = nullptr;
+        m_observers.Reserve(MAX_OBSERVERS_COUNT);
     }
 
     virtual ~IObservable()
     {
-        for (auto i = 0; i < m_observersCount; ++i)
-            Unregister(m_observers[i]);
-
-        if (m_observers != nullptr)
-            delete [] m_observers;
+        for (uint8_t i = 0; i < m_observers.Size(); ++i)
+            Unregister(*m_observers[i]);
     }
 
     void Register(IObserver<T>* observer)
@@ -35,19 +30,14 @@ public:
             return; // invalid
 
         // already registered?
-        auto freeSlotIndex = m_observersCount;
-        for (uint8_t i = 0; i < m_observersCount; ++i)
+        for (uint8_t i = 0; i < m_observers.Size(); ++i)
         {
-            if (m_observers[i] == observer)
+            if (*m_observers[i] == observer)
                 return; // don't add it twice
-
-            if (m_observers[i] == nullptr)
-                freeSlotIndex = i;
         }
 
         // register anew
-        if (freeSlotIndex < m_observersCount)
-            m_observers[freeSlotIndex] = observer;
+        m_observers.Add(observer);
     }
 
     void Unregister(IObserver<T>* observer)
@@ -55,11 +45,11 @@ public:
         if (observer == nullptr)
             return; // invalid
 
-        for (uint8_t i = 0; i < m_observersCount; ++i)
+        for (uint8_t i = 0; i < m_observers.Size(); ++i)
         {
-            if (m_observers[i] == observer)
+            if (*m_observers[i] == observer)
             {
-                m_observers[i] = nullptr;
+                m_observers.Remove(i);
                 break; // given that there are no duplicates
             }
         }
@@ -74,16 +64,15 @@ public:
 protected:
     void Notify(T event)
     {
-        for (uint8_t i = 0; i < m_observersCount; ++i)
+        for (uint8_t i = 0; i < m_observers.Size(); ++i)
         {
-            if (m_observers[i] && m_observers[i]->IsOfInterest(event)) // only relevant notifications
-                m_observers[i]->OnEvent(event);
+            if (const auto observer = m_observers[i]; observer && (*observer)->IsOfInterest(event)) // only relevant notifications
+                (*observer)->OnEvent(event);
         }
     }
 
 private:
-    IObserver<T>** m_observers = nullptr;
-    const uint8_t m_observersCount = 0;
+    Vector<IObserver<T>*> m_observers;
 };
 
 
