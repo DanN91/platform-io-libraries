@@ -12,8 +12,7 @@ template<typename T>
 class Vector
 {
 public:
-    [[nodiscard]]
-    bool Add(T item)
+    void Add(T item)
     {
         // reallocate to fit and add new element
         if (m_size == m_capacity)
