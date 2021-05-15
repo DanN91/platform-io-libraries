@@ -13,14 +13,14 @@ namespace
 
 MenuCursor::MenuCursor(NokiaDisplay& display, PushButton& button, char cursor, uint8_t items)
     : m_display(display)
-    , m_generator({ LINE_OFFSET, LINE_OFFSET + items }, 1, LINE_OFFSET, button)
+    , m_generator({ 0, items }, 1, 0, button)
     , m_cursor(cursor)
 {
 }
 
 void MenuCursor::Range(ValuesRange range)
 {
-    m_generator.Range({ LINE_OFFSET + range.Min(), LINE_OFFSET + range.Max() });
+    m_generator.Range(range);
 }
 
 void MenuCursor::Refresh(bool force)
@@ -42,7 +42,7 @@ uint8_t MenuCursor::Value() const
 
 void MenuCursor::Draw(uint8_t lineIndex)
 {
-    m_lastIndex = lineIndex;
+    m_lastIndex = LINE_OFFSET + lineIndex;
     m_display.SetCursor(m_lastIndex, 0);
     m_display.Write(m_cursor);
 }
