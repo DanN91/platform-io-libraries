@@ -29,7 +29,7 @@ private:
     uint32_t maxVal = 0;
 };
 
-class RangeValuesGenerator final : IObserver<ButtonState>
+class RangeValuesGenerator final : public IObserver<ButtonState>
 {
 public:
     RangeValuesGenerator(ValuesRange range, uint32_t step, uint32_t start, IObservable<ButtonState>& button, ButtonState event = ButtonState::Pressed);
