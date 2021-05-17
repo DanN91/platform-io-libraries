@@ -22,6 +22,8 @@ public:
     void Refresh(bool force = false);
     uint8_t Value() const;
 
+    explicit operator bool() const noexcept { return m_generator.IsValid(); }
+
     // non-copyable & non-movable
     MenuCursor(const MenuCursor&) = delete;
     MenuCursor& operator=(const MenuCursor&) = delete;
