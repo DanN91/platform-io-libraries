@@ -84,13 +84,16 @@ public:
         : m_subject(observable)
         , m_events(events)
     {
-        m_subject.Register(this);
+        // registering is done on demand for more flexibility in event notification order
     }
 
     virtual ~IObserver()
     {
         m_subject.Unregister(this);
     }
+
+    void Register() { m_subject.Register(this); }
+    void Unregister() { m_subject.Unregister(this); }
 
     // Handler
     virtual void OnEvent(T event) = 0;
