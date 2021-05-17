@@ -16,6 +16,7 @@ MenuCursor::MenuCursor(NokiaDisplay& display, PushButton& button, char cursor, u
     , m_generator({ 0, items }, 1, 0, button)
     , m_cursor(cursor)
 {
+    button.Register(&m_generator);
 }
 
 void MenuCursor::Range(ValuesRange range)
