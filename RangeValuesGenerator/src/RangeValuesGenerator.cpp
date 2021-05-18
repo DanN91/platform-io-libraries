@@ -30,10 +30,10 @@ uint32_t RangeValuesGenerator::Value() const
     return m_current;
 }
 
-void RangeValuesGenerator::Range(ValuesRange range)
+void RangeValuesGenerator::Range(ValuesRange range, uint32_t start)
 {
     m_range = range;
-    m_current = m_range.Min(); // start from min
+    m_current = m_range.IsInRange(start) ? start : m_range.Min(); // start from min
 }
 
 ValuesRange RangeValuesGenerator::Range() const

@@ -41,7 +41,7 @@ public:
     [[nodiscard]]
     uint32_t Value() const;
 
-    void Range(ValuesRange range);
+    void Range(ValuesRange range, uint32_t start);
 
     [[nodiscard]]
     ValuesRange Range() const;
