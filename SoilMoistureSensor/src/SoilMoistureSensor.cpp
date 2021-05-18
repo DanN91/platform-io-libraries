@@ -1,5 +1,5 @@
 /*
-    SoilMoistureSensor: Simple interface over one-analog-pin soil moisture sensor hardware.
+    SoilMoistureSensor: Simple interface over one-analog-pin soil moisture sensor hardware using Observer.
     Author: Daniel Nistor
     MIT License, 2021
 */
@@ -12,9 +12,22 @@ namespace
     constexpr const uint16_t WATER_VALUE = 350;
 } // anonymous
 
-SoilMoistureSensor::SoilMoistureSensor(uint8_t analogPin)
-    : m_pin(analogPin)
+SoilMoistureSensor::SoilMoistureSensor(uint8_t analogPin, Sensitivity sensitivity)
+    : IObservable(1)
+    , m_pin(analogPin)
+    , m_threshold(static_cast<uint8_t>(sensitivity))
 {
+}
+
+void SoilMoistureSensor::HandleEvents()
+{
+    const auto Difference = [](uint16_t valueOne, uint16_t valueTwo){ return (valueOne >= valueTwo) ? (valueOne - valueTwo) : (valueTwo - valueOne); };
+
+    if (const auto currentValue = Value(); Difference(currentValue, m_value) >= m_threshold)
+    {
+        m_value = currentValue;
+        Notify(SoilMoistureEvent::MoistureChanged);
+    }
 }
 
 uint8_t SoilMoistureSensor::Value() const
