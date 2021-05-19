@@ -34,3 +34,8 @@ uint8_t SoilMoistureSensor::Value() const
 {
     return constrain(map(analogRead(m_pin), AIR_VALUE, WATER_VALUE, 0, 100), 0, 100);
 }
+
+uint16_t SoilMoistureSensor::RawValue() const
+{
+    return analogRead(m_pin);
+}

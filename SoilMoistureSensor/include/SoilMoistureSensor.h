@@ -25,6 +25,7 @@ public:
 
     void HandleEvents();
     uint8_t Value() const;
+    uint16_t RawValue() const;
 
     // non-copyable & non-movable
     SoilMoistureSensor(const SoilMoistureSensor&) = delete;
