@@ -24,7 +24,8 @@ public:
     ~LightSensor() = default;
 
     void HandleEvents();
-    uint16_t Value() const;
+    uint8_t Value() const;
+    uint16_t RawValue() const;
 
     // non-copyable & non-movable
     LightSensor(const LightSensor&) = delete;
@@ -34,6 +35,6 @@ public:
 
 private:
     const uint8_t m_pin;
-    uint16_t m_value = 0;
+    uint8_t m_value = 0;
     const uint8_t m_threshold = 0;
 };
