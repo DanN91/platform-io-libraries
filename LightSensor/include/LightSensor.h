@@ -15,9 +15,9 @@ class LightSensor final : public IObservable<LightSensorEvent>
 public:
     enum class Sensitivity
     {
-        Low = 200,
-        Medium = 100,
-        High = 50
+        Low = 30,
+        Medium = 15,
+        High = 5
     };
 
     LightSensor(uint8_t analogPin, Sensitivity sensitivity);
@@ -35,5 +35,5 @@ public:
 private:
     const uint8_t m_pin;
     uint16_t m_value = 0;
-    const uint16_t m_threshold = 0;
+    const uint8_t m_threshold = 0;
 };
