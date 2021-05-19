@@ -5,6 +5,12 @@
 */
 #include "LightSensor.h"
 
+namespace
+{
+    constexpr const uint16_t BRIGHT_DAY_VALUE = 1000;
+    constexpr const uint16_t DARK_NIGHT_VALUE = 10;
+} // anonymous
+
 LightSensor::LightSensor(uint8_t analogPin, Sensitivity sensitivity)
     : IObservable(1)
     , m_pin(analogPin)
@@ -25,5 +31,5 @@ void LightSensor::HandleEvents()
 
 uint16_t LightSensor::Value() const
 {
-    return analogRead(m_pin);
+    return constrain(map(analogRead(m_pin), DARK_NIGHT_VALUE, BRIGHT_DAY_VALUE, 0, 100), 0, 100);
 }
