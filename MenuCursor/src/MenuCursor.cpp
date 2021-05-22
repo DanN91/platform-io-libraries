@@ -11,10 +11,8 @@ namespace
     constexpr const uint8_t LINE_OFFSET = 2;
 } // anonymous
 
-MenuCursor::MenuCursor(NokiaDisplay& display, PushButton& button, char cursor, uint8_t items)
-    : m_display(display)
-    , m_generator({ 0, items }, 1, 0, button)
-    , m_cursor(cursor)
+MenuCursor::MenuCursor(NokiaDisplay &display, PushButton &button, char cursor, uint8_t items)
+    : m_display(display), m_generator({0, items}, 1, 0, button), m_cursor(cursor)
 {
     button.Register(&m_generator);
 }
@@ -33,6 +31,8 @@ void MenuCursor::Refresh(bool force)
     {
         Erase();
         Draw(newIndex);
+
+        m_lastIndex = newIndex;
     }
 }
 
@@ -43,13 +43,12 @@ uint8_t MenuCursor::Value() const
 
 void MenuCursor::Draw(uint8_t lineIndex)
 {
-    m_lastIndex = LINE_OFFSET + lineIndex;
-    m_display.SetCursor(m_lastIndex, 0);
+    m_display.SetCursor(LINE_OFFSET + lineIndex, 0);
     m_display.Write(m_cursor);
 }
 
 void MenuCursor::Erase() const
 {
-    m_display.SetCursor(m_lastIndex, 0);
+    m_display.SetCursor(LINE_OFFSET + m_lastIndex, 0);
     m_display.Write(" "); // whitespace
 }
