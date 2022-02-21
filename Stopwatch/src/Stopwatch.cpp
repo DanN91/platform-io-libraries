@@ -13,20 +13,46 @@ Stopwatch::Stopwatch(IObservable<ButtonState>& button)
 {
 }
 
+Stopwatch::Stopwatch(IObservable<ButtonState>& button, IStopwatchHandler* handler)
+    : IObserver<ButtonState>(ButtonState::Pressed | ButtonState::Released, button)
+    , m_handler(handler)
+{
+}
+
 void Stopwatch::OnEvent(ButtonState event)
 {
-    if (event == ButtonState::Released)
-        IsRunning() ? Stop() : Start();
+    // #TODO:Think of a better way to split the functionality
+    if (m_handler)
+    {
+        switch (event)
+        {
+            case ButtonState::Pressed:
+                Start();
+                break;
+            case ButtonState::Released:
+                Stop();
+                break;
+        }
+    }
+    else
+    {
+        if (event == ButtonState::Released)
+            IsRunning() ? Stop() : Start();
+    }
 }
 
 void Stopwatch::Start()
 {
     m_startedAtMs = millis();
+    if (m_handler)
+        m_handler->OnStart();
 }
 
 void Stopwatch::Stop()
 {
     m_stoppedAtMs = millis();
+    if (m_handler)
+        m_handler->OnStop();
 }
 
 bool Stopwatch::IsRunning() const

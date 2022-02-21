@@ -10,11 +10,13 @@
 
 #include <ObserverPattern.h>
 #include <PushButtonMasks.h>
+#include <IStopwatchHandler.h>
 
 class Stopwatch final : public IObserver<ButtonState>
 {
 public:
     Stopwatch(IObservable<ButtonState>& button);
+    Stopwatch(IObservable<ButtonState>& button, IStopwatchHandler* handler);
     ~Stopwatch() = default;
 
     // IObserver
@@ -30,4 +32,6 @@ private:
 
     uint32_t m_stoppedAtMs = 0;
     uint32_t m_startedAtMs = 0;
+    // Handler
+    IStopwatchHandler* const m_handler = nullptr;
 };
