@@ -8,7 +8,7 @@
 
 #include <Arduino.h>
 
-template<typename T, size_t N>
+template<typename T, uint32_t N>
 class Array
 {
 public:
@@ -27,13 +27,13 @@ public:
         return true;
     }
 
-    void Remove(size_t index)
+    void Remove(uint32_t index)
     {
         if (index >= m_count)
             return;
 
         m_count--;
-        for (size_t i = index; i < m_count; ++i)
+        for (uint32_t i = index; i < m_count; ++i)
             m_data[i] = m_data[i + 1]; // overwrite free slot and move it at the end for O(1) addition
     }
 
@@ -42,12 +42,12 @@ public:
         m_count = 0;
     }
 
-    size_t Count() const
+    uint32_t Count() const
     {
         return m_count;
     }
 
-    const T* operator[](size_t index) const
+    const T* operator[](uint32_t index) const
     {
         if (index >= m_count)
             return nullptr;
@@ -57,6 +57,6 @@ public:
 
 private:
     T m_data[N] = {};
-    size_t m_count = 0;
-    size_t m_capacity = 0;
+    uint32_t m_count = 0;
+    uint32_t m_capacity = 0;
 };
