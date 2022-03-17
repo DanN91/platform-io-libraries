@@ -22,13 +22,13 @@ public:
         m_size++;
     }
 
-    void Remove(size_t index)
+    void Remove(uint32_t index)
     {
         if (index >= m_size)
             return;
 
         m_size--;
-        for (size_t i = index; i < m_size; ++i)
+        for (uint32_t i = index; i < m_size; ++i)
             m_data[i] = m_data[i + 1]; // overwrite free slot and move it at the end for O(1) addition
     }
 
@@ -44,9 +44,9 @@ public:
         m_capacity = 0;
     }
 
-    size_t Size() const { return m_size; }
+    uint32_t Size() const { return m_size; }
 
-    void Reserve(size_t capacity)
+    void Reserve(uint32_t capacity)
     {
         if (m_capacity >= capacity)
             return;
@@ -54,7 +54,7 @@ public:
         if (m_data && m_size > 0) // existing elements
         {
             auto newData = new T[capacity]; // allocate for new capacity
-            for (size_t i = 0; i < m_size; ++i)
+            for (uint32_t i = 0; i < m_size; ++i)
                 newData[i] = m_data[i]; // copy existing elements to new array
 
             delete [] m_data; // deallocate old array
@@ -68,7 +68,7 @@ public:
         m_capacity = capacity;
     }
 
-    const T* operator[](size_t index) const
+    const T* operator[](uint32_t index) const
     {
         if (index >= m_size)
             return nullptr;
@@ -78,6 +78,6 @@ public:
 
 private:
     T* m_data = nullptr;
-    size_t m_size = 0;
-    size_t m_capacity = 0;
+    uint32_t m_size = 0;
+    uint32_t m_capacity = 0;
 };
