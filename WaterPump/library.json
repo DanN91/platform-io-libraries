@@ -20,6 +20,6 @@
     "frameworks": "Arduino",
     "platforms": "*",
     "build_unflags": "-std=c++99",
-    "build_flags": "-std=c++17"
+    "build_flags": "-std=c++1z"
   }
   
