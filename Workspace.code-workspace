@@ -1,7 +1,11 @@
 {
     "folders": [
         {
-            "path": "."
+            "path": "SDLogger"
+        },
+        {
+            "name": "WriteMultiple",
+            "path": "SDLogger\\examples\\WriteMultiple"
         }
     ]
 }

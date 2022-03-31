@@ -9,8 +9,6 @@
 #include <Arduino.h>
 #include <SPI.h>
 
-#include <ObserverPattern.h>
-
 class SDLogger final
 {
 public:
