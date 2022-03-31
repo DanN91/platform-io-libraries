@@ -20,5 +20,9 @@
     "frameworks": "Arduino",
     "platforms": "*",
     "build_unflags": "-std=c++99",
-    "build_flags": "-std=c++1z"
+    "build_flags": "-std=c++1z",
+    "dependencies":
+    {
+        "SD": "arduino-libraries/SD@^1.2.4"
+    }
   }
