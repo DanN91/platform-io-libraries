@@ -8,15 +8,17 @@
 
 #include <Arduino.h>
 #include <SPI.h>
-#include <SD.h>
 
 #include <ObserverPattern.h>
 
 class SDLogger final
 {
 public:
-    SDLogger();
-    ~SDLogger();
+    SDLogger(const char* filename);
+    ~SDLogger() = default;
+
+    static bool Initialize(uint8_t pin);
+    void Log(const char* message);
 
     // non-movable & non-copyable
     SDLogger(SDLogger&&) = delete;
@@ -25,5 +27,5 @@ public:
     SDLogger& operator=(const SDLogger&) = delete;
 
 private:
-    File m_file;
+    const char* m_filename;
 };
