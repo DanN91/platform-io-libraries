@@ -20,5 +20,9 @@
     "frameworks": "Arduino",
     "platforms": "*",
     "build_unflags": "-std=c++99",
-    "build_flags": "-std=c++20"
+    "build_flags": "-std=c++1z",
+    "dependencies":
+    {
+        "ObserverPattern": "https://github.com/DanN91/platform-io-libraries.git#ObserverPattern"
+    }
   }
