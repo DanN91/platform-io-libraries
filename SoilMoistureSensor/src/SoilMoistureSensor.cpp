@@ -8,14 +8,14 @@
 
 namespace
 {
-    constexpr const uint16_t AIR_VALUE = 684;
-    constexpr const uint16_t WATER_VALUE = 350;
+    constexpr const uint16_t DRY_VALUE = 586;
+    constexpr const uint16_t WET_VALUE = 350;
 } // anonymous
 
 SoilMoistureSensor::SoilMoistureSensor(uint8_t analogPin, Sensitivity sensitivity)
     : IObservable(1)
     , m_pin(analogPin)
-    , m_threshold(static_cast<uint8_t>(sensitivity))
+    , m_threshold(sensitivity)
 {
 }
 
@@ -23,7 +23,7 @@ void SoilMoistureSensor::HandleEvents()
 {
     const auto Difference = [](uint16_t valueOne, uint16_t valueTwo){ return (valueOne >= valueTwo) ? (valueOne - valueTwo) : (valueTwo - valueOne); };
 
-    if (const auto currentValue = Value(); Difference(currentValue, m_value) >= m_threshold)
+    if (const auto currentValue = Value(); Difference(currentValue, m_value) >= static_cast<uint8_t>(m_threshold))
     {
         m_value = currentValue;
         Notify(SoilMoistureEvent::MoistureChanged);
@@ -32,7 +32,7 @@ void SoilMoistureSensor::HandleEvents()
 
 uint8_t SoilMoistureSensor::Value() const
 {
-    return constrain(map(analogRead(m_pin), AIR_VALUE, WATER_VALUE, 0, 100), 0, 100);
+    return constrain(map(analogRead(m_pin), DRY_VALUE, WET_VALUE, 0, 100), 0, 100);
 }
 
 uint16_t SoilMoistureSensor::RawValue() const

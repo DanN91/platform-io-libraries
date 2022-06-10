@@ -13,7 +13,7 @@
 class SoilMoistureSensor final : public IObservable<SoilMoistureEvent>
 {
 public:
-    enum class Sensitivity
+    enum class Sensitivity : uint8_t
     {
         Low = 30,
         Medium = 10,
@@ -21,7 +21,7 @@ public:
     };
 
     SoilMoistureSensor(uint8_t analogPin, Sensitivity sensitivity);
-    ~SoilMoistureSensor() = default;
+    virtual ~SoilMoistureSensor() = default;
 
     void HandleEvents();
     uint8_t Value() const;
@@ -36,5 +36,5 @@ public:
 private:
     const uint8_t m_pin;
     uint16_t m_value = 0;
-    const uint8_t m_threshold = 0;
+    const Sensitivity m_threshold = Sensitivity::Medium;
 };
