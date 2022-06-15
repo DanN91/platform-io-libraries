@@ -96,6 +96,16 @@ void NokiaDisplay::ClearLine()
     SetCursor(m_line, m_column);
 }
 
+void NokiaDisplay::TurnOff()
+{
+    Send(OpType::CMD, 24);
+}
+
+void NokiaDisplay::TurnOn()
+{
+    Send(OpType::CMD, 20);
+}
+
 void NokiaDisplay::SetContrast(uint8_t level)
 {
     // The PCD8544 datasheet specifies a maximum Vop of 8.5V

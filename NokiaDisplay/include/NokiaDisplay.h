@@ -19,7 +19,10 @@ public:
 
     // Erase everything on the display...
     void Clear();
-    void ClearLine();  // ...or just the current line
+    void ClearLine(); // ...or just the current line
+
+    void TurnOff();
+    void TurnOn();
 
     // Set display contrast level (0-127)...
     void SetContrast(uint8_t level);
@@ -28,9 +31,9 @@ public:
     void SetCursor(uint8_t line, uint8_t column);
 
     // Write various types
-    void Write(const char* text);
+    void Write(const char *text);
     void Write(char character);
-    void Write(const String& text);
+    void Write(const String &text);
     void Write(uint32_t number);
 
     enum class Aligned : uint8_t
@@ -40,15 +43,15 @@ public:
         Right
     };
 
-    void Write(uint8_t line, const char* text, Aligned aligned);
-    void Write(uint8_t line, const String& text, Aligned aligned);
+    void Write(uint8_t line, const char *text, Aligned aligned);
+    void Write(uint8_t line, const String &text, Aligned aligned);
     void Write(uint8_t line, uint32_t number, Aligned aligned);
 
-	// non-copyable & non-movable
-    NokiaDisplay(const NokiaDisplay&) = delete;
-    NokiaDisplay& operator=(const NokiaDisplay&) = delete;
-    NokiaDisplay(NokiaDisplay&&) = delete;
-    NokiaDisplay& operator=(NokiaDisplay&&) = delete;
+    // non-copyable & non-movable
+    NokiaDisplay(const NokiaDisplay &) = delete;
+    NokiaDisplay &operator=(const NokiaDisplay &) = delete;
+    NokiaDisplay(NokiaDisplay &&) = delete;
+    NokiaDisplay &operator=(NokiaDisplay &&) = delete;
 
 private:
     enum class OpType : uint8_t
@@ -61,7 +64,7 @@ private:
     void WriteChar(uint8_t character);
     void WriteDigit(uint8_t digit);
 
-    uint8_t SizeInPixels(const char* text) const;
+    uint8_t SizeInPixels(const char *text) const;
     uint8_t SizeInPixels(uint32_t number) const;
 
     uint8_t ColumnPixelPosition(uint8_t sizeInPixels, Aligned aligned) const;
@@ -71,14 +74,14 @@ private:
     void UpdateCursor();
 
     const uint8_t m_reset;
-	const uint8_t m_sce;
+    const uint8_t m_sce;
     const uint8_t m_dc;
     const uint8_t m_sdin;
     const uint8_t m_sclk;
 
     // Current cursor position...
     uint8_t m_column = 0;
-    uint8_t m_line   = 0;
+    uint8_t m_line = 0;
 
-	bool m_isCursorValid = false;
+    bool m_isCursorValid = false;
 };
