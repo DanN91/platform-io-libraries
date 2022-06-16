@@ -1,0 +1,22 @@
+{
+    "name": "SleepManager",
+    "version": "1.0.0",
+    "description": "Facade wrapping ATMEGA328 deep sleep functionality and energy saving tips",
+    "keywords": "OOP, sleep, deep, energy, saving",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DanN91/platform-io-libraries.git#SleepManager"
+    },
+    "authors": [
+        {
+            "name": "Daniel Nistor",
+            "email": "nisdan91@gmail.com",
+            "maintainer": true
+        }
+    ],
+    "license": "MIT",
+    "frameworks": "Arduino",
+    "platforms": "*",
+    "build_unflags": "-std=c++99",
+    "build_flags": "-std=c++1z"
+}
