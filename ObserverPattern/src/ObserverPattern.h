@@ -97,8 +97,9 @@ public:
 
     // Handler
     virtual void OnEvent(T event) = 0;
-    bool IsOfInterest(T event) const { return (m_events & event) == event; }
+    bool IsOfInterest(T event) const { return (int)(m_events & event) != 0; } // at least one event is of interest
     T Events() const { return m_events; }
+    void SetEvents(T events) { m_events = events; }
 
     // non-copyable & non-movable
     IObserver(const IObserver&) = delete;
@@ -106,7 +107,9 @@ public:
     IObserver(IObserver&&) = delete;
     IObserver& operator=(IObserver&&) = delete;
 
-private:
+protected:
     IObservable<T>& m_subject;
-    const T m_events = 0;
+
+private:
+    T m_events = 0;
 };
