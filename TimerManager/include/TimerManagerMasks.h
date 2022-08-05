@@ -12,6 +12,11 @@ enum class TimerEvent : uint8_t
     Month = 32 // once 4 weeks
 };
 
+inline bool operator ! (TimerEvent value)
+{
+    return value == static_cast<TimerEvent>(0);
+}
+
 inline TimerEvent operator | (TimerEvent lhs, TimerEvent rhs)
 {
     return static_cast<TimerEvent>(static_cast<uint8_t>(lhs) | static_cast<uint8_t>(rhs));
