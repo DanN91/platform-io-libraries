@@ -22,17 +22,17 @@ void TimerManager::Initialize() const
 
     TCCR1B &= ~(1 << WGM13); // make sure PWM mode is cleared
     TCCR1B |= (1 << CS12) | (1 << CS10) | (1 << WGM12); // Prescaller: 1024, Clear Timer on Compare Mode
+
+    sei(); // enable global interrupts
 }
 
 void TimerManager::Activate() const
 {
     TIMSK1 |= (1 << OCIE1A); // enable interrupt on OCR1A match
-    sei(); // enable global interrupts
 }
 
 void TimerManager::Deactivate() const
 {
-    cli(); // disable global interrupts
     TIMSK1 &= ~(1 << OCIE1A); // disable interrupt on OCR1A match
 }
 

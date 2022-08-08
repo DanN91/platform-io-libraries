@@ -7,6 +7,7 @@ bool LED_STATE = false;
 
 TimerManager timerManager(2); // only 1 observer
 CounterWithLEDBlinker counterWithBlinker(13, TimerEvent::Second | TimerEvent::Minute | TimerEvent::Hour, timerManager);
+
 class SerialPrinter final : public ITimerDurationPrinter
 {
 public:
