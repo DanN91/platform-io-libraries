@@ -27,7 +27,22 @@
     5. Use Watchdog ISR: ISR(WDT_vect) { <code> }
 */
 
-SleepManager sleepManager(SleepMask::AllUnusedPinsLow | SleepMask::DisableADC | SleepMask::DisableBOD | SleepMask::UseInterrupt1, 16);
+uint32_t val = 0;
+
+SleepManager sleepManager(
+    SleepMask::AllUnusedPinsLow | SleepMask::DisableADC | SleepMask::DisableBOD | SleepMask::UseInterrupt1, 8,
+    [&val]()
+    {
+      Serial.print("Preparing for sleep...: ");
+      Serial.println(val);
+      Serial.flush();
+    },
+    [&val]()
+    {
+      Serial.print("Waking from sleep: ");
+      Serial.println(val++);
+      Serial.flush();
+    });
 
 void setup()
 {
@@ -44,10 +59,4 @@ void loop()
     digitalWrite(13, LOW);
 
     sleepManager.Sleep();
-}
-
-// Watchdog interrupt routine
-ISR(WDT_vect)
-{
-    Serial.println("Woke up.");
 }
