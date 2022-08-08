@@ -27,7 +27,7 @@
     5. Use Watchdog ISR: ISR(WDT_vect) { <code> }
 */
 
-SleepManager sleepManager(SleepMask::AllUnusedPinsLow | SleepMask::DisableADC | SleepMask::DisableBOD, 16);
+SleepManager sleepManager(SleepMask::AllUnusedPinsLow | SleepMask::DisableADC | SleepMask::DisableBOD | SleepMask::UseInterrupt1, 16);
 
 void setup()
 {

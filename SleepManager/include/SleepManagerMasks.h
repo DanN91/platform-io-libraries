@@ -8,6 +8,8 @@ enum class SleepMask : uint8_t
     AllUnusedPinsLow = 1, // make sure Initialize() is called before any pinMode() call
     DisableBOD = 2,
     DisableADC = 4,
+    UseInterrupt0 = 8, // D2
+    UseInterrupt1 = 16, // D3
 };
 
 inline bool operator ! (SleepMask value)

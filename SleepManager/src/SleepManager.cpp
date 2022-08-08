@@ -40,6 +40,13 @@ void SleepManager::Sleep() const
 {
     for (uint32_t i = 0; i < m_sleepCounter; ++i) // gives double the time = 16 sec
     {
+        // setup external interrupt
+        if (!!(m_optionsMask & SleepMask::UseInterrupt0))
+            attachInterrupt(0, [](){}, FALLING);
+
+        if (!!(m_optionsMask & SleepMask::UseInterrupt1))
+            attachInterrupt(1, [](){}, FALLING);
+
         if (!!(m_optionsMask & SleepMask::DisableBOD))
         {
             // Turn off BOD while Sleeping: This must be set after sleep is enabled and before sleep is called
