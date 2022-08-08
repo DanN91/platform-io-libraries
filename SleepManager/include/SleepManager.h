@@ -29,6 +29,7 @@ public:
 private:
     const SleepMask m_optionsMask = SleepMask::None;
     const uint32_t m_sleepCounter = 0;
+    const uint8_t m_interruptPin = 0;
     const HandlerFunc m_prepare = nullptr;
     const HandlerFunc m_onWakeUp = nullptr;
 };

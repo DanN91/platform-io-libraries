@@ -13,6 +13,10 @@ SleepManager::SleepManager(SleepMask mask, uint32_t sleepDurationSec, HandlerFun
     , m_sleepCounter(sleepDurationSec / 8) // prescaller yields every 8 seconds
     , m_prepare(beforeSleep)
     , m_onWakeUp(onWakeUp)
+    , m_interruptPin(
+        !!(m_optionsMask & SleepMask::UseInterrupt0) ? digitalPinToInterrupt(2)
+        : !!(m_optionsMask & SleepMask::UseInterrupt1) ? digitalPinToInterrupt(3)
+            : 0)
 {
 }
 
@@ -43,11 +47,8 @@ void SleepManager::Sleep() const
     for (uint32_t i = 0; i < m_sleepCounter; ++i) // gives double the time = 16 sec
     {
         // setup external interrupt
-        if (!!(m_optionsMask & SleepMask::UseInterrupt0))
-            attachInterrupt(0, [](){}, FALLING);
-
-        if (!!(m_optionsMask & SleepMask::UseInterrupt1))
-            attachInterrupt(1, [](){}, FALLING);
+        if (!!(m_optionsMask & SleepMask::UseInterrupt0) || !!(m_optionsMask & SleepMask::UseInterrupt1))
+            attachInterrupt(m_interruptPin, [](){}, FALLING);
 
         // do user-defined things before going to sleep
         if (m_prepare)
@@ -64,7 +65,11 @@ void SleepManager::Sleep() const
 
         // do user-defined things after waking up
         if (m_onWakeUp)
+        {
+            if (!!(m_optionsMask & SleepMask::UseInterrupt0) || !!(m_optionsMask & SleepMask::UseInterrupt1))
+                detachInterrupt(m_interruptPin);
             m_onWakeUp();
+        }
     }
 }
 
