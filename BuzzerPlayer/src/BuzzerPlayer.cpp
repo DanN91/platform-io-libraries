@@ -40,4 +40,21 @@ namespace Buzzer
 
         noTone(m_buzzerPin);
     }
+
+    void BuzzerPlayer::Play(uint32_t frequency) const
+    {
+        tone(m_buzzerPin, frequency);
+    }
+
+    void BuzzerPlayer::Play(uint32_t frequency, uint32_t duration) const
+    {
+        tone(m_buzzerPin, frequency, duration);
+    }
+
+    void BuzzerPlayer::Stop() const
+    {
+        noTone(m_buzzerPin);
+    }
+
+
 } // namespace Buzzer

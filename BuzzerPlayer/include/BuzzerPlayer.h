@@ -23,6 +23,9 @@ namespace Buzzer
 
         void Play(Song song) const;
         void Play(Note note) const;
+        void Play(uint32_t frequency) const;
+        void Play(uint32_t frequency, uint32_t duration) const;
+        void Stop() const;
 
     private:
         uint8_t m_buzzerPin;
