@@ -5,9 +5,15 @@
 */
 #include "LEDController.h"
 
-LEDController::LEDController(uint8_t digitalPin, uint32_t intervalMs)
+LEDController::LEDController(uint8_t digitalPin)
     : m_pin(digitalPin)
-    , m_intervalMs(intervalMs)
+{
+}
+
+LEDController::LEDController(uint8_t digitalPin, uint32_t intervalMs, uint8_t times)
+    : m_pin(digitalPin)
+    , m_interval(intervalMs)
+    , m_times(times)
 {
 }
 
@@ -29,11 +35,16 @@ void LEDController::Run()
   }
 }
 
-void LEDController::SetInterval(uint32_t intervalMs)
+void LEDController::Configure(uint32_t intervalMs, uint8_t times)
 {
   if (intervalMs != m_intervalMs)
   {
     digitalWrite(m_pin, LOW);
     m_intervalMs = intervalMs;
+  }
+
+  if (times != m_times)
+  {
+    m_times = times;
   }
 }
