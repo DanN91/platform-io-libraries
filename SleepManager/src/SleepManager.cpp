@@ -76,5 +76,5 @@ void SleepManager::Sleep() const
 // Watchdog interrupt routine
 ISR(WDT_vect)
 {
-    // Serial.println("Woke up.");
+    Serial.println("Woke up.");
 }
