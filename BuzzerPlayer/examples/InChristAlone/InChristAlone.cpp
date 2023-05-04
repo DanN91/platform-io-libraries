@@ -3,7 +3,7 @@
 #include <Arduino.h>
 #include <BuzzerPlayer.h>
 
-BuzzerPlayer buzzer(11);
+Buzzer::BuzzerPlayer buzzer(11);
 
 void setup()
 {
@@ -16,6 +16,6 @@ void setup()
 
 void loop()
 {
-    buzzer.Play(InChristAlone);
+    buzzer.Play(Buzzer::InChristAlone);
     delay(10000);
 }
