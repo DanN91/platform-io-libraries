@@ -10,24 +10,25 @@
 
 #include <Arduino.h>
 
-#include "../include/Sound.h"
-#include "../include/Songs.h"
+#include "Sound.h"
+#include "Songs.h"
 
 namespace Buzzer
 {
-    class BuzzerPlayer final
-    {
-    public:
-        explicit BuzzerPlayer(uint8_t pwmPin);
-        void Initialize() const;
+  class BuzzerPlayer final
+  {
+  public:
+    explicit BuzzerPlayer(uint8_t pwmPin);
+    void Initialize() const;
 
-        void Play(Song song) const;
-        void Play(Note note) const;
-        void Play(uint32_t frequency) const;
-        void Play(uint32_t frequency, uint32_t duration) const;
-        void Stop() const;
+    void Play(Song song) const;
+    void Play(Note note) const;
+    void Play(uint32_t frequency) const;
+    void Play(uint32_t frequency, uint32_t durationMs) const;
+    void Write(uint8_t value) const;
+    void Stop() const;
 
-    private:
-        uint8_t m_buzzerPin;
-    };
+  private:
+    uint8_t m_pin;
+  };
 } // namespace Buzzer
