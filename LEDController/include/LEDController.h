@@ -11,13 +11,14 @@ class LEDController final
 {
 public:
   LEDController(uint8_t digitalPin);
-  LEDController(uint8_t digitalPin, uint32_t intervalMs, uint32_t times);
+  LEDController(uint8_t digitalPin, uint32_t intervalMs);
+  LEDController(uint8_t digitalPin, uint32_t intervalMs, uint8_t times);
   ~LEDController() = default;
 
   void Initialize();
   void Run();
 
-  void Configure(uint32_t intervalMs);
+  void Configure(uint32_t intervalMs, uint8_t times);
 
   // non-copyable & non-movable
   LEDController(const LEDController &) = delete;

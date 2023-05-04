@@ -10,9 +10,15 @@ LEDController::LEDController(uint8_t digitalPin)
 {
 }
 
+LEDController::LEDController(uint8_t digitalPin, uint32_t intervalMs)
+    : m_pin(digitalPin)
+    , m_intervalMs(intervalMs)
+{
+}
+
 LEDController::LEDController(uint8_t digitalPin, uint32_t intervalMs, uint8_t times)
     : m_pin(digitalPin)
-    , m_interval(intervalMs)
+    , m_intervalMs(intervalMs)
     , m_times(times)
 {
 }
