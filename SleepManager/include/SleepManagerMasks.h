@@ -26,3 +26,19 @@ inline SleepMask operator & (SleepMask lhs, SleepMask rhs)
 {
     return static_cast<SleepMask>(static_cast<uint8_t>(lhs) & static_cast<uint8_t>(rhs));
 }
+
+enum class SleepEvent
+{
+    GoingToSleep = 1,
+    WokeUp = 2
+};
+
+inline SleepEvent operator |(SleepEvent lhs, SleepEvent rhs)
+{
+    return static_cast<SleepEvent>(static_cast<uint8_t>(lhs) | static_cast<uint8_t>(rhs));
+}
+
+inline SleepEvent operator &(SleepEvent lhs, SleepEvent rhs)
+{
+    return static_cast<SleepEvent>(static_cast<uint8_t>(lhs) & static_cast<uint8_t>(rhs));
+}
