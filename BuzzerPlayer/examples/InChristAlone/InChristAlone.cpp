@@ -3,11 +3,11 @@
 #include <Arduino.h>
 #include <BuzzerPlayer.h>
 
-BuzzerPlayer buzzer(9);
+BuzzerPlayer buzzer(11);
 
 void setup()
 {
-    Serial.begin(57600);
+    Serial.begin(115200);
 
     buzzer.Initialize();
 
