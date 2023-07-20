@@ -1,0 +1,4 @@
+[wokwi]
+version = 1
+firmware = '.pio\build\LEDPlay\firmware.hex'
+elf = '.pio\build\LEDPlay\firmware.elf'
