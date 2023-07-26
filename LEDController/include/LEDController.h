@@ -7,7 +7,9 @@
 
 #include <Arduino.h>
 
-class LEDController final
+#include "ILEDController.h"
+
+class LEDController final : public ILEDController
 {
 public:
   LEDController(uint8_t digitalPin);
@@ -15,10 +17,12 @@ public:
   LEDController(uint8_t digitalPin, uint32_t intervalMs, uint8_t times);
   ~LEDController() = default;
 
-  void Initialize();
-  void Run();
+  virtual void Initialize();
 
-  void Configure(uint32_t intervalMs, uint8_t times);
+  virtual void Run();
+  virtual bool HasFinished() const;
+
+  virtual void Configure(uint32_t intervalMs, uint8_t times);
 
   // non-copyable & non-movable
   LEDController(const LEDController &) = delete;
@@ -27,9 +31,8 @@ public:
   LEDController &operator=(LEDController &&) = delete;
 
 private:
+  void Toggle();
+
   const uint8_t m_pin;
-  uint8_t m_state = LOW;
-  uint32_t m_intervalMs = 0;
-  uint8_t m_times = 1;
-  uint32_t m_lastMs = 0;
+  bool m_state = LOW;
 };
