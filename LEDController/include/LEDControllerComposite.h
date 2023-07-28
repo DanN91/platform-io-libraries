@@ -13,26 +13,27 @@
 class LEDControllerComposite final : public ILEDController
 {
 public:
-  LEDControllerComposite() = default;
-  virtual ~LEDControllerComposite() = default;
+    LEDControllerComposite() = default;
+    virtual ~LEDControllerComposite() = default;
 
-  // ILEDController
-  virtual void Initialize();
+    // ILEDController
+    virtual void Initialize() override;
+    virtual void Configure(ILEDBlinkConfiguration* configuration) override;
+    virtual bool HasFinished() const override;
+    virtual explicit operator bool() const override;
 
-  virtual void Configure(uint32_t intervalMs, uint8_t times);
-  virtual void Run();
-  virtual bool HasFinished() const;
+    // Vector
+    void Add(ILEDController *const led);
+    void Remove(ILEDController *const led);
 
-  // Vector
-  void Add(ILEDController* const led);
-  void Remove(ILEDController* const led);
-
-  // non-copyable & non-movable
-  LEDControllerComposite(const LEDControllerComposite&) = delete;
-  LEDControllerComposite &operator=(const LEDControllerComposite &) = delete;
-  LEDControllerComposite(LEDControllerComposite &&) = delete;
-  LEDControllerComposite &operator=(LEDControllerComposite &&) = delete;
+    // non-copyable & non-movable
+    LEDControllerComposite(const LEDControllerComposite&) = delete;
+    LEDControllerComposite& operator=(const LEDControllerComposite&) = delete;
+    LEDControllerComposite(LEDControllerComposite&&) = delete;
+    LEDControllerComposite& operator=(LEDControllerComposite&&) = delete;
 
 private:
-  Vector<ILEDController*> m_leds;
+    virtual void Run() override;
+
+    Vector<ILEDController*> m_leds;
 };

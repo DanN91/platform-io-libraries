@@ -128,5 +128,10 @@
       [ "red4:C", "red5:C", "black", [ "v17.6", "h-30.6" ] ]
     ],
     "serialMonitor": { "display": "terminal", "newline": "lf" },
-    "dependencies": {}
+    "dependencies": {},
+    "logging": {
+        "engineLogging": true,
+        "trace": true,
+        "traceResponse": true
+    }
   }

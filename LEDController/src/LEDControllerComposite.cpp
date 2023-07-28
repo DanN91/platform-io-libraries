@@ -20,15 +20,15 @@ void LEDControllerComposite::Run()
 
     for (uint8_t i = 0; i < m_leds.Size(); ++i)
     {
-        (*m_leds[i])->Run();
+        (*m_leds[i])->SafeRun();
     }
 }
 
-void LEDControllerComposite::Configure(uint32_t intervalMs, uint8_t times)
+void LEDControllerComposite::Configure(ILEDBlinkConfiguration* configuration)
 {
     for (uint8_t i = 0; i < m_leds.Size(); ++i)
     {
-        (*m_leds[i])->Configure(intervalMs, times);
+        (*m_leds[i])->Configure(configuration);
     }
 }
 
@@ -36,12 +36,24 @@ bool LEDControllerComposite::HasFinished() const
 {
     bool hasFinished = true;
 
-    for (uint8_t i = 0; i < m_leds.Size(); ++i)
+    for (uint8_t i = 0; i < m_leds.Size() && hasFinished; ++i)
     {
         hasFinished &= (*m_leds[i])->HasFinished();
     }
 
     return hasFinished;
+}
+
+LEDControllerComposite::operator bool() const
+{
+    bool isConfigured = true;
+
+    for (uint8_t i = 0; i < m_leds.Size() && isConfigured; ++i)
+    {
+        isConfigured &= *(*m_leds[i]) ? true : false; // call bool operator
+    }
+
+    return isConfigured;
 }
 
 void LEDControllerComposite::Add(ILEDController* led)

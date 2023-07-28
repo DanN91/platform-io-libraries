@@ -10,60 +10,51 @@ LEDController::LEDController(uint8_t digitalPin)
 {
 }
 
-LEDController::LEDController(uint8_t digitalPin, uint32_t intervalMs)
-    : ILEDController(intervalMs)
-    , m_pin(digitalPin)
-{
-}
-
-LEDController::LEDController(uint8_t digitalPin, uint32_t intervalMs, uint8_t times)
-    : ILEDController(intervalMs, times)
-    , m_pin(digitalPin)
-{
-}
-
 void LEDController::Initialize()
 {
-  pinMode(m_pin, OUTPUT);
-  m_state = LOW;
-  digitalWrite(m_pin, m_state);
+    pinMode(m_pin, OUTPUT);
+    digitalWrite(m_pin, m_state);
 }
 
 void LEDController::Run()
 {
-  const uint32_t currentMs = millis();
-
-  if (CanRun() && !HasFinished() && (currentMs - m_lastMs) >= m_intervalMs)
-  {
-    Toggle();
-
-    if (!m_state) // count only when the LED turns OFF
+    if (CanRun() && !HasFinished())
     {
-      m_countTimes += 1;
-
-      Serial.print("Counting: ");
-      Serial.println(m_countTimes);
+        m_configuration->OnRun(*this);
     }
-  }
 }
 
-void LEDController::Configure(uint32_t intervalMs, uint8_t times)
+bool LEDController::HasFinished() const
 {
-  digitalWrite(m_pin, LOW);
-  m_intervalMs = intervalMs;
-
-  m_times = times;
-  m_countTimes = 0;
+    return m_configuration ? m_configuration->HasFinished() : true;
 }
 
-inline bool LEDController::HasFinished() const
+void LEDController::Configure(ILEDBlinkConfiguration* configuration)
 {
-  return (m_countTimes >= m_times);
+    digitalWrite(m_pin, LOW);
+    m_configuration = configuration;
+    if (m_configuration)
+        m_configuration->Activate();
 }
 
-void LEDController::Toggle()
+bool LEDController::Toggle()
 {
-  m_state = !m_state;
-  m_lastMs = millis(); // update last time we blinked the LED
-  digitalWrite(m_pin, m_state); // toggle state
+    m_state = !m_state;
+    digitalWrite(m_pin, m_state);
+
+    // #FIXME:REMOVE
+    Serial.print(m_name ? m_name : "NoName");
+    Serial.print(" | Toggle: ");
+    Serial.print(!m_state ? "HIGH" : "LOW");
+    Serial.print(" -> ");
+    Serial.print(m_state ? "HIGH" : "LOW");
+    Serial.print(" @ ");
+    Serial.println(millis());
+
+    return m_state;
+}
+
+LEDController::operator bool() const
+{
+    return m_configuration ? true : false;
 }

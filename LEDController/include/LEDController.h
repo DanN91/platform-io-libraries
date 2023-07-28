@@ -9,30 +9,36 @@
 
 #include "ILEDController.h"
 
-class LEDController final : public ILEDController
+class LEDController final : public ILEDController, ILEDToggler
 {
 public:
-  LEDController(uint8_t digitalPin);
-  LEDController(uint8_t digitalPin, uint32_t intervalMs);
-  LEDController(uint8_t digitalPin, uint32_t intervalMs, uint8_t times);
-  ~LEDController() = default;
+    LEDController(uint8_t digitalPin);
+    ~LEDController() = default;
 
-  virtual void Initialize();
+    // ILEDController
+    virtual void Initialize() override;
+    virtual bool HasFinished() const override;
+    virtual void Configure(ILEDBlinkConfiguration* configuration) override;
+    virtual explicit operator bool() const override;
 
-  virtual void Run();
-  virtual bool HasFinished() const;
+    // ILEDToggler
+    virtual bool Toggle() override;
 
-  virtual void Configure(uint32_t intervalMs, uint8_t times);
+    // #FIXME:REMOVE
+    void SetName(const char* name) { m_name = name; }
 
-  // non-copyable & non-movable
-  LEDController(const LEDController &) = delete;
-  LEDController &operator=(const LEDController &) = delete;
-  LEDController(LEDController &&) = delete;
-  LEDController &operator=(LEDController &&) = delete;
+    // non-copyable & non-movable
+    LEDController(const LEDController&) = delete;
+    LEDController& operator=(const LEDController&) = delete;
+    LEDController(LEDController&&) = delete;
+    LEDController& operator=(LEDController&&) = delete;
 
 private:
-  void Toggle();
+    virtual void Run();
 
-  const uint8_t m_pin;
-  bool m_state = LOW;
+    ILEDBlinkConfiguration* m_configuration = nullptr;
+
+    const char* m_name = nullptr;
+    const uint8_t m_pin;
+    bool m_state = LOW;
 };
