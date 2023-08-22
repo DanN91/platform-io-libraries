@@ -1,0 +1,22 @@
+{
+    "name": "BuzzerPlayerNonBlocking",
+    "version": "1.0.0",
+    "description": "Play a song by notes on a buzzer or a speaker using non-blocking delay.",
+    "keywords": "buzzer, speaker, player, song",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DanN91/platform-io-libraries.git#BuzzerPlayerNonBlocking"
+    },
+    "authors": [
+        {
+            "name": "Daniel Nistor",
+            "email": "nisdan91@gmail.com",
+            "maintainer": true
+        }
+    ],
+    "license": "MIT",
+    "frameworks": "Arduino",
+    "platforms": "*",
+    "build_unflags": "-std=c++99",
+    "build_flags": "-std=c++1z"
+}

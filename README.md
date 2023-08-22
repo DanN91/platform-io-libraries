@@ -10,5 +10,5 @@ platform = atmelavr
 board = uno
 framework = arduino
 lib_deps =
-    https://github.com/DanN91/platform-io-libraries#BuzzerPlayer
+    https://github.com/DanN91/platform-io-libraries#BuzzerPlayerNonBlocking
 ```
