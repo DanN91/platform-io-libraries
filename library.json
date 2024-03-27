@@ -1,12 +1,12 @@
 {
-    "name": "<LIBRARY_NAME>",
+    "name": "SettingsManager",
     "version": "1.0.0",
-    "description": "<DESCRIPTION>",
-    "keywords": "<KEYWORDS>",
+    "description": "Object-oriented component helping you get notified when a setting changes its value.",
+    "keywords": "settings, storage, observer",
     "repository":
     {
       "type": "git",
-      "url": "https://github.com/DanN91/platform-io-libraries.git#<BRANCH>"
+      "url": "https://github.com/DanN91/platform-io-libraries.git#SettingsManager"
     },
     "authors":
     [
@@ -23,6 +23,7 @@
     "build_flags": "-std=c++1z",
     "dependencies":
     {
-        "<LIB_NAME>": "https://github.com/DanN91/platform-io-libraries.git#<BRANCH>"
+        "ObserverPattern": "https://github.com/DanN91/platform-io-libraries.git#ObserverPattern",
+        "IStorage": "https://github.com/DanN91/platform-io-libraries.git#IStorage"
     }
   }
