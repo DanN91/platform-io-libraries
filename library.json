@@ -1,28 +1,25 @@
 {
-    "name": "<LIBRARY_NAME>",
-    "version": "1.0.0",
-    "description": "<DESCRIPTION>",
-    "keywords": "<KEYWORDS>",
-    "repository":
+  "name": "DHT22Sensor",
+  "version": "1.0.0",
+  "description": "Read humidity and temperature in Farenheit and Celsius.",
+  "keywords": "dht22, humidity, temperature, sensor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DanN91/platform-io-libraries.git#DHT22Sensor"
+  },
+  "authors": [
     {
-      "type": "git",
-      "url": "https://github.com/DanN91/platform-io-libraries.git#<BRANCH>"
-    },
-    "authors":
-    [
-      {
-        "name": "Daniel Nistor",
-        "email": "nisdan91@gmail.com",
-        "maintainer": true
-      }
-    ],
-    "license": "MIT",
-    "frameworks": "Arduino",
-    "platforms": "*",
-    "build_unflags": "-std=c++99",
-    "build_flags": "-std=c++1z",
-    "dependencies":
-    {
-        "<LIB_NAME>": "https://github.com/DanN91/platform-io-libraries.git#<BRANCH>"
+      "name": "Daniel Nistor",
+      "email": "nisdan91@gmail.com",
+      "maintainer": true
     }
+  ],
+  "license": "MIT",
+  "frameworks": "Arduino",
+  "platforms": "*",
+  "build_unflags": "-std=c++99",
+  "build_flags": "-std=c++1z",
+  "dependencies": {
+    "ObserverPattern": "https://github.com/DanN91/platform-io-libraries.git#ObserverPattern"
   }
+}
