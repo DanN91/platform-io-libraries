@@ -1,12 +1,12 @@
 {
-    "name": "<LIBRARY_NAME>",
+    "name": "Switcher",
     "version": "1.0.0",
-    "description": "<DESCRIPTION>",
-    "keywords": "<KEYWORDS>",
+    "description": "Helps manage hardware components requiring On and Off behaviors",
+    "keywords": "switch, on, off",
     "repository":
     {
       "type": "git",
-      "url": "https://github.com/DanN91/platform-io-libraries.git#<BRANCH>"
+      "url": "https://github.com/DanN91/platform-io-libraries.git#Switcher"
     },
     "authors":
     [
@@ -20,9 +20,5 @@
     "frameworks": "Arduino",
     "platforms": "*",
     "build_unflags": "-std=c++99",
-    "build_flags": "-std=c++1z",
-    "dependencies":
-    {
-        "<LIB_NAME>": "https://github.com/DanN91/platform-io-libraries.git#<BRANCH>"
-    }
+    "build_flags": "-std=c++1z"
   }
