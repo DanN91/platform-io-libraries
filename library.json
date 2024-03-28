@@ -1,12 +1,12 @@
 {
-    "name": "<LIBRARY_NAME>",
+    "name": "Hygrostat",
     "version": "1.0.0",
-    "description": "<DESCRIPTION>",
-    "keywords": "<KEYWORDS>",
+    "description": "DHT22 sensor based humidity control unit",
+    "keywords": "humidity, dht22, control",
     "repository":
     {
       "type": "git",
-      "url": "https://github.com/DanN91/platform-io-libraries.git#<BRANCH>"
+      "url": "https://github.com/DanN91/platform-io-libraries.git#Hygrostat"
     },
     "authors":
     [
@@ -23,6 +23,7 @@
     "build_flags": "-std=c++1z",
     "dependencies":
     {
-        "<LIB_NAME>": "https://github.com/DanN91/platform-io-libraries.git#<BRANCH>"
+        "DHT22Sensor": "https://github.com/DanN91/platform-io-libraries#Switcher",
+        "Switcher": "https://github.com/DanN91/platform-io-libraries#DHT22Sensor"
     }
   }
