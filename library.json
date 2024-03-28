@@ -1,12 +1,12 @@
 {
-    "name": "<LIBRARY_NAME>",
+    "name": "AT24C32",
     "version": "1.0.0",
-    "description": "<DESCRIPTION>",
-    "keywords": "<KEYWORDS>",
+    "description": "Library for writing to and reading from AT24C32 EEPROM",
+    "keywords": "persistency, object-oriented, eeprom",
     "repository":
     {
       "type": "git",
-      "url": "https://github.com/DanN91/platform-io-libraries.git#<BRANCH>"
+      "url": "https://github.com/DanN91/platform-io-libraries.git#AT24C32"
     },
     "authors":
     [
@@ -23,6 +23,6 @@
     "build_flags": "-std=c++1z",
     "dependencies":
     {
-        "<LIB_NAME>": "https://github.com/DanN91/platform-io-libraries.git#<BRANCH>"
+        "IStorage": "https://github.com/DanN91/platform-io-libraries.git#IStorage"
     }
   }
