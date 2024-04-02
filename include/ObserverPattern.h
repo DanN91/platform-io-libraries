@@ -92,8 +92,8 @@ public:
         m_subject.Unregister(this);
     }
 
-    void Register() { m_subject.Register(this); }
-    void Unregister() { m_subject.Unregister(this); }
+    virtual void Register() { m_subject.Register(this); }
+    virtual void Unregister() { m_subject.Unregister(this); }
 
     // Handler
     virtual void OnEvent(T event) = 0;
