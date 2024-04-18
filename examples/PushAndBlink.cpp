@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "Blinker.h"
 
-const uint8_t BUTTON_PIN = 5;
+const uint8_t BUTTON_PIN = 7;
 
 PushButton button(BUTTON_PIN);
 Blinker blinker(button, LED_BUILTIN);
