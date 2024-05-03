@@ -40,12 +40,12 @@ void DHT22::Initialize()
   digitalWrite(m_pin, HIGH);
 }
 
-uint8_t DHT22::TemperatureAsCelsius()
+float DHT22::TemperatureAsCelsius()
 {
   if (!Read())
     return BAD_TEMP;
 
-  auto temperature = static_cast<int16_t>(m_data[2] & 0x7F);
+  float temperature = static_cast<int16_t>(m_data[2] & 0x7F);
   temperature *= 256;
   temperature += static_cast<int16_t>(m_data[3]);
   temperature /= 10;
@@ -56,7 +56,7 @@ uint8_t DHT22::TemperatureAsCelsius()
   return temperature;
 }
 
-uint8_t DHT22::TemperatureAsFarenheit()
+float DHT22::TemperatureAsFarenheit()
 {
   const auto celsius = TemperatureAsCelsius();
   if (celsius == BAD_TEMP)
@@ -65,20 +65,18 @@ uint8_t DHT22::TemperatureAsFarenheit()
   return CelsiusToFarenheit(celsius);
 }
 
-uint8_t DHT22::Humidity()
+float DHT22::Humidity()
 {
   if (!Read())
     return BAD_HUM;
 
-  auto humidity = static_cast<uint16_t>(m_data[0]); // to allow math operations
-  humidity *= 256;
-  humidity += m_data[1];
-  humidity /= 10;
+  float humidity = static_cast<uint16_t>(m_data[0]) << 8 | m_data[1]; // to allow math operations
+  humidity *= 0.1;
 
-  return static_cast<uint8_t>(humidity);
+  return humidity;
 }
 
-uint8_t DHT22::CelsiusToFarenheit(uint8_t celsius) const
+float DHT22::CelsiusToFarenheit(float celsius) const
 {
   return (celsius * 9) / 5 + 32;
 }

@@ -21,15 +21,15 @@ public:
 
   void Initialize();
 
-  uint8_t TemperatureAsCelsius();
-  uint8_t TemperatureAsFarenheit();
+  float TemperatureAsCelsius();
+  float TemperatureAsFarenheit();
 
-  uint8_t Humidity();
+  float Humidity();
 
 private:
   bool Read();
 
-  uint8_t CelsiusToFarenheit(uint8_t celsius) const;
+  float CelsiusToFarenheit(float celsius) const;
 
   bool m_isFirstReading = true;
   uint32_t m_lastReadTime = 0;
