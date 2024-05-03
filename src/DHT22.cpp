@@ -45,10 +45,8 @@ float DHT22::TemperatureAsCelsius()
   if (!Read())
     return BAD_TEMP;
 
-  float temperature = static_cast<int16_t>(m_data[2] & 0x7F);
-  temperature *= 256;
-  temperature += static_cast<int16_t>(m_data[3]);
-  temperature /= 10;
+  float temperature = static_cast<int16_t>(m_data[2] & 0x7F) << 8 | m_data[3];
+  temperature *= 0.1;
 
   if (m_data[2] & 0x80)
     temperature *= -1;
