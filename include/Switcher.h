@@ -16,6 +16,8 @@ public:
     void On() override;
     void Off() override;
 
+    void On(uint8_t value);
+
     // non-copyable & non-movable
     Switcher(const Switcher&) = delete;
     Switcher& operator=(const Switcher&) = delete;

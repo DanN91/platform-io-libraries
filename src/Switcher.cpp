@@ -23,3 +23,9 @@ void Switcher::Off()
     digitalWrite(m_switchPin, m_useLowLevel ? HIGH : LOW);
     ISwitch::Off();
 }
+
+void Switcher::On(uint8_t value)
+{
+    analogWrite(m_switchPin, m_useLowLevel ? 255 - value : value);
+    ISwitch::On();
+}

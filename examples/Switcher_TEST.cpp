@@ -21,4 +21,7 @@ void loop()
     test.Off();
     Serial.println(test.IsOn() ? "ON" : "OFF");
     delay(1000);
+    test.On(128); // analog write
+    Serial.println(test.IsOn() ? "ON" : "OFF");
+    delay(1000);
 }
