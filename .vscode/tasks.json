@@ -1,0 +1,24 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Sync and Upload Project",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "e:/Projects/CodeSync/sync.py", // actual path to CodeSync script
+        "${workspaceFolder}/sync/config.json",
+        "--interval",
+        "60"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
