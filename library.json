@@ -1,28 +1,22 @@
 {
-    "name": "<LIBRARY_NAME>",
-    "version": "1.0.0",
-    "description": "<DESCRIPTION>",
-    "keywords": "<KEYWORDS>",
-    "repository":
+  "name": "NonBlockingDelay",
+  "version": "1.0.0",
+  "description": "Helps execute timely actions without blocking the execution",
+  "keywords": "delay, non-blocking",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DanN91/platform-io-libraries.git#NonBlockingDelay"
+  },
+  "authors": [
     {
-      "type": "git",
-      "url": "https://github.com/DanN91/platform-io-libraries.git#<BRANCH>"
-    },
-    "authors":
-    [
-      {
-        "name": "Daniel Nistor",
-        "email": "nisdan91@gmail.com",
-        "maintainer": true
-      }
-    ],
-    "license": "MIT",
-    "frameworks": "Arduino",
-    "platforms": "*",
-    "build_unflags": "-std=c++99",
-    "build_flags": "-std=c++1z",
-    "dependencies":
-    {
-        "<LIB_NAME>": "https://github.com/DanN91/platform-io-libraries.git#<BRANCH>"
+      "name": "Daniel Nistor",
+      "email": "nisdan91@gmail.com",
+      "maintainer": true
     }
-  }
+  ],
+  "license": "MIT",
+  "frameworks": "Arduino",
+  "platforms": "*",
+  "build_unflags": "-std=c++99",
+  "build_flags": "-std=c++1z"
+}
